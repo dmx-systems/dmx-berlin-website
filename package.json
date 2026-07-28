@@ -2,7 +2,7 @@
   "name": "elm-pages-app",
   "type": "module",
   "scripts": {
-    "start": "elm-pages dev",
+    "dev": "elm-pages dev",
     "build": "elm-pages build"
   },
   "devDependencies": {

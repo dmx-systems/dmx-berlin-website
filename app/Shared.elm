@@ -1,16 +1,19 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
+import View exposing (View)
+
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
-import Html exposing (Html)
-import Html.Events
 import Pages.Flags
 import Pages.PageUrl exposing (PageUrl)
 import UrlPath exposing (UrlPath)
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
-import View exposing (View)
+
+import Html exposing (Html)
+import Html.Events
+
 
 
 template : SharedTemplate Msg Model Data msg
@@ -94,26 +97,8 @@ view :
 view sharedData page model toMsg pageView =
     { body =
         [ Html.nav []
-            [ Html.button
-                [ Html.Events.onClick MenuClicked ]
-                [ Html.text
-                    (if model.showMenu then
-                        "Close Menu"
-
-                     else
-                        "Open Menu"
-                    )
-                ]
-            , if model.showMenu then
-                Html.ul []
-                    [ Html.li [] [ Html.text "Menu item 1" ]
-                    , Html.li [] [ Html.text "Menu item 2" ]
-                    ]
-
-              else
-                Html.text ""
-            ]
-            |> Html.map toMsg
+            [ Html.text "" ]
+                |> Html.map toMsg
         , Html.main_ [] pageView.body
         ]
     , title = pageView.title
