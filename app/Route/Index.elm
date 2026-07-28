@@ -9,7 +9,8 @@ import Head
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 
-import Html
+import Html exposing (div, text)
+import Html.Attributes exposing (class)
 
 
 
@@ -56,8 +57,10 @@ view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app shared =
     { title = "dmx.berlin"
     , body =
-        [ Html.div [] [ Html.text "A Cognitive Home" ]
-        , Html.div [] [ Html.text "The screen, redesigned for focus" ]
-        , Html.div [] [ Html.text "contact@dmx.berlin" ]
+        [ div []
+            [ div [ class "title" ] [ text "A Cognitive Home" ]
+            , div [ class "subtitle" ] [ text "The screen, redesigned for focus" ]
+            ]
+        , div [ class "contact" ] [ text "contact@dmx.berlin" ]
         ]
     }
