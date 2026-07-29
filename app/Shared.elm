@@ -2,6 +2,8 @@ module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
 import View exposing (View)
 
+import FeatherIcons as Icon
+
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
@@ -11,7 +13,8 @@ import UrlPath exposing (UrlPath)
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 
-import Html exposing (Html)
+import Html exposing (Html, a, div, text)
+import Html.Attributes exposing (href, id)
 import Html.Events
 
 
@@ -86,20 +89,28 @@ data =
 
 view :
     Data
-    ->
-        { path : UrlPath
-        , route : Maybe Route
-        }
+    -> { path : UrlPath, route : Maybe Route }
     -> Model
     -> (Msg -> msg)
     -> View msg
     -> { body : List (Html msg), title : String }
 view sharedData page model toMsg pageView =
     { body =
-        [ Html.nav []
-            [ Html.text "" ]
-                |> Html.map toMsg
-        , Html.main_ [] pageView.body
+        [ Html.main_ [] pageView.body
+        , Html.footer [] footer
         ]
     , title = pageView.title
     }
+
+
+footer : List (Html msg)
+footer =
+    [ div [ id "icons" ]
+        [ a [ href "https://github.com/jri" ]
+            [ Icon.github |> Icon.toHtml [] ]
+        , a [ href "https://www.linkedin.com/in/jörg-richter-0a829123b/" ]
+            [ Icon.linkedin |> Icon.toHtml [] ]
+        , a [ href "mailto:jri@dmx.berlin" ]
+            [ Icon.mail |> Icon.toHtml [] ]
+        ]
+    ]

@@ -9,8 +9,8 @@ import Head
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 
-import Html exposing (div, text)
-import Html.Attributes exposing (class)
+import Html exposing (br, div, text)
+import Html.Attributes exposing (id)
 
 
 
@@ -31,7 +31,7 @@ type alias Data =
 
 
 type alias ActionData =
-    {}
+    ()
 
 
 route : StatelessRoute RouteParams Data ActionData
@@ -58,9 +58,12 @@ view app shared =
     { title = "dmx.berlin"
     , body =
         [ div []
-            [ div [ class "title" ] [ text "A Cognitive Home" ]
-            , div [ class "subtitle" ] [ text "The screen, redesigned for focus" ]
+            [ div [ id "title" ] [ text "A Cognitive Home" ]
+            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
             ]
-        , div [ class "contact" ] [ text "contact@dmx.berlin" ]
+        , div [ id "profile" ]
+            [ text "Jörg Richter", br [] []
+            , text "Software Developer, Berlin"
+            ]
         ]
     }

@@ -2,6 +2,7 @@
 node_modules/
 elm-stuff/
 dist/
+deploy/
 .elm-pages/
 functions/render/elm-pages-cli.mjs
 functions/server-render/elm-pages-cli.mjs
