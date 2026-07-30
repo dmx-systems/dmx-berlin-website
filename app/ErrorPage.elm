@@ -71,6 +71,8 @@ view error model =
 
             InternalError string ->
                 "Unexpected Error"
+    , name = "error"
+    , nav = Nothing
     }
 
 

@@ -14,7 +14,7 @@ import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 
 import Html exposing (Html, a, div, text)
-import Html.Attributes exposing (href, id)
+import Html.Attributes exposing (attribute, href, id)
 import Html.Events
 
 
@@ -96,11 +96,39 @@ view :
     -> { body : List (Html msg), title : String }
 view sharedData page model toMsg pageView =
     { body =
-        [ Html.main_ [] pageView.body
+        [ Html.header [] header
+        , Html.main_ []
+            ( nav pageView ++
+                [ div
+                    [ id "body"
+                    , attribute "data-name" pageView.name
+                    ]
+                    pageView.body
+                ]
+            )
         , Html.footer [] footer
         ]
     , title = pageView.title
     }
+
+
+nav : View msg -> List (Html msg)
+nav pageView =
+    case pageView.nav of
+        Just nav_ -> [ Html.nav [] nav_ ]
+        Nothing -> []
+
+
+header : List (Html msg)
+header =
+    [ div [ id "logo" ]
+        [ Route.Index |> Route.link [] [ text "logo" ] ]
+    , div [ id "nav" ]
+        [ div [] [ text "" ] -- TODO: "Blog"
+        , Route.Project__Project_ { project = "linqa" }
+            |> Route.link [] [ text "Projects" ]
+        ]
+    ]
 
 
 footer : List (Html msg)

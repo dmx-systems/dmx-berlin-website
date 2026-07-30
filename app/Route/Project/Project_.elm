@@ -1,4 +1,4 @@
-module Route.Index exposing (ActionData, Data, Model, Msg, route)
+module Route.Project.Project_ exposing (ActionData, Data, Model, Msg, route)
 
 import Shared
 import View exposing (View)
@@ -9,7 +9,7 @@ import Head
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
 
-import Html exposing (br, div, text)
+import Html exposing (Html, br, div, text)
 import Html.Attributes exposing (id)
 
 
@@ -23,7 +23,7 @@ type alias Msg =
 
 
 type alias RouteParams =
-    {}
+    { project : String }
 
 
 type alias Data =
@@ -36,15 +36,23 @@ type alias ActionData =
 
 route : StatelessRoute RouteParams Data ActionData
 route =
-    RouteBuilder.single
+    RouteBuilder.preRender
         { head = head
         , data = data
+        , pages = pages
         }
         |> RouteBuilder.buildNoState { view = view }
 
 
-data : BackendTask FatalError Data
-data =
+pages : BackendTask FatalError (List RouteParams)
+pages =
+    BackendTask.succeed
+        [ { project = "linqa" }
+        ]
+
+
+data : RouteParams -> BackendTask FatalError Data
+data routeParams =
     BackendTask.succeed ()
 
 
@@ -55,17 +63,16 @@ head app =
 
 view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app sharedModel =
-    { title = "dmx.berlin"
+    { title = "Projects - "
     , body =
-        [ div []
-            [ div [ id "title" ] [ text "A Cognitive Home" ]
-            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
-            ]
-        , div [ id "profile" ]
-            [ text "Jörg Richter", br [] []
-            , text "Software Developer, Berlin"
-            ]
+        [ div [] [ text <| "project: " ++ app.routeParams.project ]
+        , div [] [ text <| "shared model: " ++ if sharedModel.showMenu then "true" else "false" ]
         ]
-    , name = "front"
-    , nav = Nothing
+    , name = "project"
+    , nav = Just nav
     }
+
+
+nav : List (Html msg)
+nav =
+    [ text "project nav" ]
