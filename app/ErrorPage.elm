@@ -51,27 +51,24 @@ internalError =
 
 view : ErrorPage -> Model -> View Msg
 view error model =
-    { body =
+    { title =
+        case error of
+            NotFound ->
+                "Page Not Found"
+            InternalError string ->
+                "Unexpected Error"
+    , body =
         [ Html.div []
             [ Html.p []
                 [ Html.text <|
                     case error of
                         NotFound ->
                             "Page not found. Maybe try another URL?"
-
                         InternalError string ->
                             "Something went wrong.\n" ++ string
                 ]
             ]
         ]
-    , title =
-        case error of
-            NotFound ->
-                "Page Not Found"
-
-            InternalError string ->
-                "Unexpected Error"
-    , name = "error"
     , nav = Nothing
     }
 
@@ -81,6 +78,5 @@ statusCode error =
     case error of
         NotFound ->
             404
-
         InternalError _ ->
             500

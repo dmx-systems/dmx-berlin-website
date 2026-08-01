@@ -13,7 +13,6 @@ import Html exposing (Html)
 type alias View msg =
     { title : String
     , body : List (Html msg)
-    , name : String
     , nav : Maybe (List (Html msg))
     }
 
@@ -24,7 +23,6 @@ map fn doc =
     { title = doc.title
     , body = doc.body
         |> List.map (Html.map fn)
-    , name = doc.name
     , nav = doc.nav
         |> Maybe.map (List.map (Html.map fn))
     }

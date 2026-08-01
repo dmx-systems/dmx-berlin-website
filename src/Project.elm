@@ -1,8 +1,9 @@
-module Project exposing (all, nav)
+module Project exposing (RouteParams, all, nav)
 
 import Route
 
-import Html exposing (Html, br, div, li, text, ul)
+import Html exposing (Attribute, Html, br, div, li, text, ul)
+import Html.Attributes exposing (class)
 
 
 all : List Project
@@ -18,13 +19,31 @@ type alias Project =
     }
 
 
-nav : List (Html msg)
-nav =
+type alias RouteParams =
+    { slug : String }
+
+
+nav : RouteParams -> List (Html msg)
+nav routeParams =
     [ ul []
         (all |>
-            List.map (\{name, slug} -> li [] [ link slug ])
+            List.map
+                (\{slug} ->
+                    let
+                        isSelected = routeParams.slug == slug
+                    in
+                    li (liAttr isSelected) [ link slug ]
+                )
         )
     ]
+
+
+liAttr : Bool -> List (Attribute msg)
+liAttr isSelected =
+    if isSelected then
+        [ class "selected" ]
+    else
+        []
 
 
 link : String -> Html msg

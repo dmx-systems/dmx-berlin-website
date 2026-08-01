@@ -1,6 +1,6 @@
 module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
-import Project
+import Project exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
 import FatalError exposing (FatalError)
@@ -21,10 +21,6 @@ type alias Model =
 
 type alias Msg =
     ()
-
-
-type alias RouteParams =
-    { slug : String }
 
 
 type alias Data =
@@ -71,6 +67,5 @@ view app sharedModel =
         , div [] [ text <| "shared model: "
             ++ if sharedModel.showMenu then "true" else "false" ]
         ]
-    , name = "project"
-    , nav = Just Project.nav
+    , nav = Just (Project.nav app.routeParams)
     }

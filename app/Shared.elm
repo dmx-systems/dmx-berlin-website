@@ -1,6 +1,6 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
-import FeatherIcons as Icon
+import Template
 
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
@@ -12,8 +12,8 @@ import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 import View exposing (View)
 
-import Html exposing (Html, a, div, text)
-import Html.Attributes exposing (attribute, href, id)
+import Html exposing (Attribute, Html, a, div, text)
+import Html.Attributes exposing (attribute, class, href, id)
 import Html.Events
 
 
@@ -92,52 +92,25 @@ view :
     -> (Msg -> msg)
     -> View msg
     -> { body : List (Html msg), title : String }
-view sharedData page model toMsg pageView =
+view sharedData {path} model toMsg page =
     { body =
-        [ Html.header [] header
-        , Html.main_ []
-            ( nav pageView
+        [ Html.header [] Template.header
+        , Html.main_ (mainAttr path)
+            (   (case page.nav of
+                    Just nav -> [ Html.nav [] nav ]
+                    Nothing -> []
+                )
                 ++
-                [ div
-                    [ id "body"
-                    , attribute "data-name" pageView.name
-                    ]
-                    pageView.body
-                ]
+                [ div [ id "body" ] page.body ]
             )
-        , Html.footer [] footer
+        , Html.footer [] Template.footer
         ]
-    , title = pageView.title
+    , title = page.title
     }
 
 
-nav : View msg -> List (Html msg)
-nav pageView =
-    case pageView.nav of
-        Just nav_ -> [ Html.nav [] nav_ ]
-        Nothing -> []
-
-
-header : List (Html msg)
-header =
-    [ div [ id "logo" ]
-        [ Route.Index |> Route.link [] [ text "logo" ] ]
-    , div [ id "nav" ]
-        [ div [] [ text "" ] -- TODO: "Blog"
-        , Route.Project__Slug_ { slug = "linqa" }
-            |> Route.link [] [ text "Projects" ]
-        ]
-    ]
-
-
-footer : List (Html msg)
-footer =
-    [ div [ id "icons" ]
-        [ a [ href "https://github.com/jri" ]
-            [ Icon.github |> Icon.toHtml [] ]
-        , a [ href "https://www.linkedin.com/in/jörg-richter-0a829123b/" ]
-            [ Icon.linkedin |> Icon.toHtml [] ]
-        , a [ href "mailto:jri@dmx.berlin" ]
-            [ Icon.mail |> Icon.toHtml [] ]
-        ]
-    ]
+mainAttr : UrlPath -> List (Attribute msg)
+mainAttr path =
+    case path of
+        page :: _ -> [ id page ]
+        [] -> [ id "front" ]

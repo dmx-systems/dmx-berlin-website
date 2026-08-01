@@ -66,6 +66,5 @@ view app sharedModel =
             , text "Software Developer, Berlin"
             ]
         ]
-    , name = "front"
     , nav = Nothing
     }
