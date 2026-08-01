@@ -1,7 +1,5 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
-import View exposing (View)
-
 import FeatherIcons as Icon
 
 import BackendTask exposing (BackendTask)
@@ -12,6 +10,7 @@ import Pages.PageUrl exposing (PageUrl)
 import UrlPath exposing (UrlPath)
 import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
+import View exposing (View)
 
 import Html exposing (Html, a, div, text)
 import Html.Attributes exposing (attribute, href, id)
@@ -72,7 +71,6 @@ update msg model =
     case msg of
         SharedMsg globalMsg ->
             ( model, Effect.none )
-
         MenuClicked ->
             ( { model | showMenu = not model.showMenu }, Effect.none )
 
@@ -98,7 +96,8 @@ view sharedData page model toMsg pageView =
     { body =
         [ Html.header [] header
         , Html.main_ []
-            ( nav pageView ++
+            ( nav pageView
+                ++
                 [ div
                     [ id "body"
                     , attribute "data-name" pageView.name
@@ -125,7 +124,7 @@ header =
         [ Route.Index |> Route.link [] [ text "logo" ] ]
     , div [ id "nav" ]
         [ div [] [ text "" ] -- TODO: "Blog"
-        , Route.Project__Project_ { project = "linqa" }
+        , Route.Project__Slug_ { slug = "linqa" }
             |> Route.link [] [ text "Projects" ]
         ]
     ]

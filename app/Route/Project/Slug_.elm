@@ -1,15 +1,16 @@
-module Route.Project.Project_ exposing (ActionData, Data, Model, Msg, route)
+module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
-import Shared
-import View exposing (View)
+import Project
 
 import BackendTask exposing (BackendTask)
 import FatalError exposing (FatalError)
 import Head
 import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
+import Shared
+import View exposing (View)
 
-import Html exposing (Html, br, div, text)
+import Html exposing (Html, br, div, li, text, ul)
 import Html.Attributes exposing (id)
 
 
@@ -23,7 +24,7 @@ type alias Msg =
 
 
 type alias RouteParams =
-    { project : String }
+    { slug : String }
 
 
 type alias Data =
@@ -47,8 +48,9 @@ route =
 pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
-        [ { project = "linqa" }
-        ]
+        (Project.all
+            |> List.map (\{slug} -> { slug = slug })
+        )
 
 
 data : RouteParams -> BackendTask FatalError Data
@@ -65,14 +67,10 @@ view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app sharedModel =
     { title = "Projects - "
     , body =
-        [ div [] [ text <| "project: " ++ app.routeParams.project ]
-        , div [] [ text <| "shared model: " ++ if sharedModel.showMenu then "true" else "false" ]
+        [ div [] [ text <| "project: " ++ app.routeParams.slug ]
+        , div [] [ text <| "shared model: "
+            ++ if sharedModel.showMenu then "true" else "false" ]
         ]
     , name = "project"
-    , nav = Just nav
+    , nav = Just Project.nav
     }
-
-
-nav : List (Html msg)
-nav =
-    [ text "project nav" ]

@@ -22,7 +22,8 @@ type alias View msg =
 map : (msg1 -> msg2) -> View msg1 -> View msg2
 map fn doc =
     { title = doc.title
-    , body = List.map (Html.map fn) doc.body
+    , body = doc.body
+        |> List.map (Html.map fn)
     , name = doc.name
     , nav = doc.nav
         |> Maybe.map (List.map (Html.map fn))
