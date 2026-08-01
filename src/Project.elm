@@ -26,24 +26,19 @@ type alias RouteParams =
 nav : RouteParams -> List (Html msg)
 nav routeParams =
     [ ul []
-        (all |>
-            List.map
-                (\{slug} ->
-                    let
-                        isSelected = routeParams.slug == slug
-                    in
-                    li (liAttr isSelected) [ link slug ]
-                )
+        (all |> List.map
+            (\{slug} ->
+                let
+                    attrs =
+                        if routeParams.slug == slug then
+                            [ class "selected" ]
+                        else
+                            []
+                in
+                li attrs [ link slug ]
+            )
         )
     ]
-
-
-liAttr : Bool -> List (Attribute msg)
-liAttr isSelected =
-    if isSelected then
-        [ class "selected" ]
-    else
-        []
 
 
 link : String -> Html msg

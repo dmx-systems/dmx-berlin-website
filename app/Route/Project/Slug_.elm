@@ -3,6 +3,7 @@ module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 import Project exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.File as File
 import FatalError exposing (FatalError)
 import Head
 import PagesMsg exposing (PagesMsg)
@@ -10,7 +11,10 @@ import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import View exposing (View)
 
-import Html exposing (Html, br, div, li, text, ul)
+import Markdown.Parser as Parser
+import Markdown.Renderer as Renderer
+
+import Html exposing (Html, br, div, h2, li, text, ul)
 import Html.Attributes exposing (id)
 
 
@@ -24,7 +28,7 @@ type alias Msg =
 
 
 type alias Data =
-    ()
+    String
 
 
 type alias ActionData =
@@ -51,7 +55,11 @@ pages =
 
 data : RouteParams -> BackendTask FatalError Data
 data routeParams =
-    BackendTask.succeed ()
+    let
+        file = "content/" ++ routeParams.slug ++ ".md"
+    in
+    File.rawFile file
+        |> BackendTask.allowFatal
 
 
 head : App Data ActionData RouteParams -> List Head.Tag
@@ -62,10 +70,15 @@ head app =
 view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app sharedModel =
     { title = "Projects - "
-    , body =
-        [ div [] [ text <| "project: " ++ app.routeParams.slug ]
-        , div [] [ text <| "shared model: "
-            ++ if sharedModel.showMenu then "true" else "false" ]
-        ]
+    , body = app.data |> markdown
     , nav = Just (Project.nav app.routeParams)
     }
+
+
+markdown : String -> List (Html msg)
+markdown source =
+  source
+    |> Parser.parse
+    |> Result.withDefault []
+    |> Renderer.render Renderer.defaultHtmlRenderer
+    |> Result.withDefault [ text "Markdown Problem!" ]
