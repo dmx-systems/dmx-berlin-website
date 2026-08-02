@@ -1,5 +1,6 @@
-module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
+module Shared exposing (Data, Model, Msg(..), template)
 
+import Project
 import SiteTemplate
 
 import BackendTask exposing (BackendTask)
@@ -30,20 +31,15 @@ template =
 
 
 type Msg
-    = SharedMsg SharedMsg
-    | MenuClicked
+    = SelectProject Project.Slug
 
 
 type alias Data =
     ()
 
 
-type SharedMsg
-    = NoOp
-
-
 type alias Model =
-    { showMenu : Bool
+    { selectedProject : Project.Slug
     }
 
 
@@ -61,7 +57,7 @@ init :
             }
     -> ( Model, Effect Msg )
 init flags maybePagePath =
-    ( { showMenu = False }
+    ( { selectedProject = Project.default }
     , Effect.none
     )
 
@@ -69,10 +65,8 @@ init flags maybePagePath =
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        SharedMsg globalMsg ->
-            ( model, Effect.none )
-        MenuClicked ->
-            ( { model | showMenu = not model.showMenu }, Effect.none )
+        SelectProject slug ->
+            ( { model | selectedProject = slug }, Effect.none )
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
@@ -94,7 +88,7 @@ view :
     -> { body : List (Html msg), title : String }
 view sharedData {path} model toMsg page =
     { body =
-        [ Html.header [] SiteTemplate.header
+        [ Html.header [] (SiteTemplate.header model.selectedProject)
         , Html.main_ (mainAttr path)
             (   (case page.nav of
                     Just nav -> [ Html.nav [] nav ]

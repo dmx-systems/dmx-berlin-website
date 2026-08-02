@@ -1,5 +1,6 @@
 module SiteTemplate exposing (header, footer)
 
+import Project
 import Route
 
 import FeatherIcons as Icon
@@ -9,13 +10,13 @@ import Html.Attributes exposing (href, id)
 
 
 
-header : List (Html msg)
-header =
+header : Project.Slug -> List (Html msg)
+header selectedProject =
     [ div [ id "home" ]
         [ Route.Index |> Route.link [] [ text "dmx.berlin" ] ]
     , div [ id "nav" ]
         [ div [] [ text "" ] -- TODO: "Blog"
-        , Route.Project__Slug_ { slug = "linqa" }
+        , Route.Project__Slug_ { slug = selectedProject }
             |> Route.link [] [ text "Projects" ]
         ]
     ]

@@ -1,14 +1,16 @@
 module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
-import Projects exposing (RouteParams)
+import Project exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.File as File
+import Effect exposing (Effect)
 import FatalError exposing (FatalError)
 import Head
 import PagesMsg exposing (PagesMsg)
-import RouteBuilder exposing (App, StatelessRoute)
+import RouteBuilder exposing (App, StatefulRoute)
 import Shared
+import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 import Markdown.Parser as Parser
@@ -24,31 +26,36 @@ type alias Model =
 
 
 type alias Msg =
-    ()
+    Project.Msg
 
 
 type alias Data =
-    String
+    Project.Slug
 
 
 type alias ActionData =
     ()
 
 
-route : StatelessRoute RouteParams Data ActionData
+route : StatefulRoute RouteParams Data ActionData Model Msg
 route =
     RouteBuilder.preRender
         { head = head
         , data = data
         , pages = pages
         }
-        |> RouteBuilder.buildNoState { view = view }
+        |> RouteBuilder.buildWithSharedState
+            { view = view
+            , init = init
+            , update = update
+            , subscriptions = subscriptions
+            }
 
 
 pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
-        (Projects.all
+        (Project.all
             |> List.map (\{slug} -> { slug = slug })
         )
 
@@ -67,12 +74,29 @@ head app =
     []
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
-view app sharedModel =
+view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg)
+view app shared model =
     { title = "Projects - "
     , body = app.data |> markdown
-    , nav = Just (Projects.nav app.routeParams)
+    , nav = Just (Project.nav app.routeParams)
     }
+
+
+init : App Data ActionData RouteParams -> Shared.Model -> ( Model, Effect Msg )
+init app shared =
+    ( {}, Effect.none )
+
+
+update : App Data ActionData RouteParams -> Shared.Model -> Msg -> Model -> ( Model, Effect Msg, Maybe Shared.Msg )
+update app shared msg model =
+    case msg of
+        Project.Clicked slug ->
+            ( model, Effect.none, Just <| Shared.SelectProject slug )
+
+
+subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg
+subscriptions routeParams path shared model =
+    Sub.none
 
 
 markdown : String -> List (Html msg)

@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "elm-pages dev",
+    "debug": "elm-pages dev --debug",
     "build": "elm-pages build"
   },
   "devDependencies": {
