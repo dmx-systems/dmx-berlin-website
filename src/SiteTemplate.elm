@@ -1,8 +1,8 @@
-module Template exposing (header, footer)
-
-import FeatherIcons as Icon
+module SiteTemplate exposing (header, footer)
 
 import Route
+
+import FeatherIcons as Icon
 
 import Html exposing (Html, a, div, text)
 import Html.Attributes exposing (href, id)
@@ -11,8 +11,8 @@ import Html.Attributes exposing (href, id)
 
 header : List (Html msg)
 header =
-    [ div [ id "logo" ]
-        [ Route.Index |> Route.link [] [ text "home" ] ]
+    [ div [ id "home" ]
+        [ Route.Index |> Route.link [] [ text "dmx.berlin" ] ]
     , div [ id "nav" ]
         [ div [] [ text "" ] -- TODO: "Blog"
         , Route.Project__Slug_ { slug = "linqa" }

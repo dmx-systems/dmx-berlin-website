@@ -1,14 +1,14 @@
-module Project exposing (RouteParams, all, nav)
+module Projects exposing (RouteParams, all, nav)
 
 import Route
 
-import Html exposing (Attribute, Html, br, div, li, text, ul)
+import Html exposing (Attribute, Html, br, div, h3, h4, li, text, ul)
 import Html.Attributes exposing (class)
 
 
 all : List Project
 all =
-    [ Project "Linqa" "linqa"
+    [ Project "Linqa is a bilingual whiteboard" "linqa"
     , Project "DM6 Elm" "dm6-elm"
     ]
 
@@ -25,7 +25,8 @@ type alias RouteParams =
 
 nav : RouteParams -> List (Html msg)
 nav routeParams =
-    [ ul []
+    [ div [] [ text "Projects" ]
+    , ul []
         (all |> List.map
             (\{slug} ->
                 let

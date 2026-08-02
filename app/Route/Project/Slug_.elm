@@ -1,6 +1,6 @@
 module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
-import Project exposing (RouteParams)
+import Projects exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
 import BackendTask.File as File
@@ -48,7 +48,7 @@ route =
 pages : BackendTask FatalError (List RouteParams)
 pages =
     BackendTask.succeed
-        (Project.all
+        (Projects.all
             |> List.map (\{slug} -> { slug = slug })
         )
 
@@ -71,14 +71,16 @@ view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app sharedModel =
     { title = "Projects - "
     , body = app.data |> markdown
-    , nav = Just (Project.nav app.routeParams)
+    , nav = Just (Projects.nav app.routeParams)
     }
 
 
 markdown : String -> List (Html msg)
 markdown source =
-  source
-    |> Parser.parse
-    |> Result.withDefault []
-    |> Renderer.render Renderer.defaultHtmlRenderer
-    |> Result.withDefault [ text "Markdown Problem!" ]
+    case Parser.parse source of
+        Ok blocks ->
+            blocks
+                |> Renderer.render Renderer.defaultHtmlRenderer
+                |> Result.withDefault [ text "Markdown render error" ]
+        Err _ ->
+            [ text "Markdown parse error" ]

@@ -1,6 +1,6 @@
 module Shared exposing (Data, Model, Msg(..), SharedMsg(..), template)
 
-import Template
+import SiteTemplate
 
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
@@ -94,7 +94,7 @@ view :
     -> { body : List (Html msg), title : String }
 view sharedData {path} model toMsg page =
     { body =
-        [ Html.header [] Template.header
+        [ Html.header [] SiteTemplate.header
         , Html.main_ (mainAttr path)
             (   (case page.nav of
                     Just nav -> [ Html.nav [] nav ]
@@ -103,7 +103,7 @@ view sharedData {path} model toMsg page =
                 ++
                 [ div [ id "body" ] page.body ]
             )
-        , Html.footer [] Template.footer
+        , Html.footer [] SiteTemplate.footer
         ]
     , title = page.title
     }

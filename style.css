@@ -1,3 +1,10 @@
+:root {
+  --bg-color: hsl(60, 56%, 91%);            /* "beige" */
+  --bg-color-dimmed: hsl(60, 45%, 87%);
+  --selection-color: hsl(240, 100%, 50%);   /* "blue" */
+  --padding: 0.3em 0.8em                    /* header and main */
+}
+
 html {
   height: 100%;
 }
@@ -9,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  background-color: beige;
+  background-color: var(--bg-color)
 }
 
 /* header */
@@ -17,7 +24,8 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  /* background-color: yellow; */
+  padding: var(--padding);
+  background-color: var(--bg-color-dimmed);
 }
 
 header #nav {
@@ -25,8 +33,7 @@ header #nav {
   gap: 1.5em;
 }
 
-header a,
-main a {
+header a, main a {
   color: black;
   text-decoration: none;
 }
@@ -36,21 +43,23 @@ main a {
 main {
   flex-grow: 1;
   display: flex;
+  padding: var(--padding);
 }
 
 main nav {
+  padding: 2.3em 4em 0 0;
   flex-basis: 200px;
-  /* background-color: lightcoral; */
+  /* background-color: hsl(60, 45%, 87%); */
 }
 
-main div#body {
+main #body {
   flex-grow: 1;
   /* background-color: honeydew; */
 }
 
 /* front page */
 
-main#front div#body {
+main#front #body {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -71,18 +80,24 @@ main#front #profile {
 
 /* project page */
 
-main#project .selected {
-  background-color: lightgray;
+main#project nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+main#project nav .selected a {
+  color: var(--selection-color);
 }
 
 /* footer */
 
 footer {
-  flex-basis: 2.4em;
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: beige;
+  padding: 0.4em 0 0.2em;
   background-color: black;
 }
 
@@ -92,5 +107,5 @@ footer #icons {
 }
 
 footer a {
-  color: beige;
+  color: var(--bg-color);
 }
