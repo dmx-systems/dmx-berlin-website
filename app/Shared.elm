@@ -13,9 +13,8 @@ import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 import View exposing (View)
 
-import Html exposing (Attribute, Html, a, div, text)
-import Html.Attributes exposing (attribute, class, href, id)
-import Html.Events
+import Html exposing (Attribute, Html)
+import Html.Attributes exposing (id)
 
 
 
@@ -43,23 +42,30 @@ type alias Model =
     }
 
 
-init :
-    Pages.Flags.Flags
-    ->
-        Maybe
-            { path :
-                { path : UrlPath
-                , query : Maybe String
-                , fragment : Maybe String
-                }
-            , metadata : route
-            , pageUrl : Maybe PageUrl
-            }
-    -> ( Model, Effect Msg )
+type alias PagePath =
+    { path :
+        { path : UrlPath
+        , query : Maybe String
+        , fragment : Maybe String
+        }
+    , metadata : Maybe Route
+    , pageUrl : Maybe PageUrl
+    }
+
+
+init : Pages.Flags.Flags -> Maybe PagePath -> ( Model, Effect Msg )
 init flags maybePagePath =
-    ( { selectedProject = Project.default }
+    ( { selectedProject = initProject maybePagePath }
     , Effect.none
     )
+
+
+initProject : Maybe PagePath -> Project.Slug
+initProject maybePagePath =
+    maybePagePath
+        |> Maybe.andThen .metadata
+        |> Maybe.andThen Project.fromRoute
+        |> Maybe.withDefault Project.default
 
 
 update : Msg -> Model -> ( Model, Effect Msg )
@@ -80,26 +86,16 @@ data =
 
 
 view :
-    Data
-    -> { path : UrlPath, route : Maybe Route }
-    -> Model
-    -> (Msg -> msg)
-    -> View msg
-    -> { body : List (Html msg), title : String }
+    Data -> { path : UrlPath, route : Maybe Route }
+    -> Model -> (Msg -> msg) -> View msg
+    -> { title : String, body : List (Html msg) }
 view sharedData {path} model toMsg page =
-    { body =
-        [ Html.header [] (SiteTemplate.header model.selectedProject)
-        , Html.main_ (mainAttr path)
-            (   (case page.nav of
-                    Just nav -> [ Html.nav [] nav ]
-                    Nothing -> []
-                )
-                ++
-                [ div [ id "body" ] page.body ]
-            )
-        , Html.footer [] SiteTemplate.footer
+    { title = "dmx.berlin - " ++ page.title
+    , body =
+        [ Html.header [] (SiteTemplate.viewHeader model.selectedProject)
+        , Html.main_ (mainAttr path) (SiteTemplate.viewMain page)
+        , Html.footer [] SiteTemplate.viewFooter
         ]
-    , title = page.title
     }
 
 

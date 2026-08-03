@@ -55,7 +55,7 @@ head app =
 
 view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
 view app sharedModel =
-    { title = "dmx.berlin"
+    { title = "A Cognitive Home"
     , body =
         [ div []
             [ div [ id "title" ] [ text "A Cognitive Home" ]

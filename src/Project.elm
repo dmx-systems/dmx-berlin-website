@@ -1,11 +1,13 @@
-module Project exposing (RouteParams, Msg(..), Slug, all, nav, default)
+module Project exposing (RouteParams, Msg(..), Slug, all, viewNav, fromRoute, lookup,
+    default)
 
 import PagesMsg exposing (PagesMsg)
-import Route
+import Route exposing (Route(..))
 
-import Html exposing (Attribute, Html, br, div, h3, h4, li, text, ul)
+import Html exposing (Html, div, li, text, ul)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
+
 
 
 all : List Project
@@ -33,8 +35,8 @@ type alias Slug =
     String
 
 
-nav : RouteParams -> List (Html (PagesMsg Msg))
-nav routeParams =
+viewNav : RouteParams -> List (Html (PagesMsg Msg))
+viewNav routeParams =
     [ div [] [ text "Projects" ]
     , ul []
         (all |> List.map
@@ -46,14 +48,14 @@ nav routeParams =
                         else
                             []
                 in
-                li attrs [ link slug ]
+                li attrs [ viewLink slug ]
             )
         )
     ]
 
 
-link : Slug -> Html (PagesMsg Msg)
-link slug =
+viewLink : Slug -> Html (PagesMsg Msg)
+viewLink slug =
     case lookup slug of
         Just project ->
             Route.Project__Slug_ { slug = slug }
@@ -61,6 +63,13 @@ link slug =
                     [ onClick (PagesMsg.fromMsg <| Clicked slug) ]
                     [ text project.name ]
         Nothing -> text "?"
+
+
+fromRoute : Route -> Maybe Slug
+fromRoute route =
+    case route of
+        Project__Slug_ { slug } -> Just slug
+        _ -> Nothing
 
 
 lookup : Slug -> Maybe Project

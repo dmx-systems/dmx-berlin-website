@@ -1,5 +1,5 @@
 {
-  "name": "elm-pages-app",
+  "name": "dmx-berlin-website",
   "type": "module",
   "scripts": {
     "dev": "elm-pages dev",

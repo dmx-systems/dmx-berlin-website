@@ -1,7 +1,8 @@
-module SiteTemplate exposing (header, footer)
+module SiteTemplate exposing (viewHeader, viewMain, viewFooter)
 
 import Project
 import Route
+import View exposing (View)
 
 import FeatherIcons as Icon
 
@@ -10,8 +11,8 @@ import Html.Attributes exposing (href, id)
 
 
 
-header : Project.Slug -> List (Html msg)
-header selectedProject =
+viewHeader : Project.Slug -> List (Html msg)
+viewHeader selectedProject =
     [ div [ id "home" ]
         [ Route.Index |> Route.link [] [ text "dmx.berlin" ] ]
     , div [ id "nav" ]
@@ -22,8 +23,18 @@ header selectedProject =
     ]
 
 
-footer : List (Html msg)
-footer =
+viewMain : View msg -> List (Html msg)
+viewMain page =
+    (case page.nav of
+        Just nav -> [ Html.nav [] nav ]
+        Nothing -> []
+    )
+    ++
+    [ div [ id "body" ] page.body ]
+
+
+viewFooter : List (Html msg)
+viewFooter =
     [ div [ id "icons" ]
         [ a [ href "https://github.com/jri" ]
             [ Icon.github |> Icon.toHtml [] ]

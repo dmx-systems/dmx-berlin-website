@@ -16,8 +16,7 @@ import View exposing (View)
 import Markdown.Parser as Parser
 import Markdown.Renderer as Renderer
 
-import Html exposing (Html, br, div, h2, li, text, ul)
-import Html.Attributes exposing (id)
+import Html exposing (Html, text)
 
 
 
@@ -63,7 +62,7 @@ pages =
 data : RouteParams -> BackendTask FatalError Data
 data routeParams =
     let
-        file = "content/" ++ routeParams.slug ++ ".md"
+        file = "content/projects/" ++ routeParams.slug ++ ".md"
     in
     File.rawFile file
         |> BackendTask.allowFatal
@@ -74,11 +73,14 @@ head app =
     []
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg)
+view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg) 
 view app shared model =
-    { title = "Projects - "
-    , body = app.data |> markdown
-    , nav = Just (Project.nav app.routeParams)
+    { title =
+        Project.lookup app.routeParams.slug
+            |> Maybe.map .name
+            |> Maybe.withDefault "?"
+    , body = app.data |> viewMarkdown
+    , nav = Just (Project.viewNav app.routeParams)
     }
 
 
@@ -87,7 +89,9 @@ init app shared =
     ( {}, Effect.none )
 
 
-update : App Data ActionData RouteParams -> Shared.Model -> Msg -> Model -> ( Model, Effect Msg, Maybe Shared.Msg )
+update :
+    App Data ActionData RouteParams -> Shared.Model -> Msg -> Model
+    -> ( Model, Effect Msg, Maybe Shared.Msg )
 update app shared msg model =
     case msg of
         Project.Clicked slug ->
@@ -99,8 +103,8 @@ subscriptions routeParams path shared model =
     Sub.none
 
 
-markdown : String -> List (Html msg)
-markdown source =
+viewMarkdown : String -> List (Html msg)
+viewMarkdown source =
     case Parser.parse source of
         Ok blocks ->
             blocks
