@@ -73,7 +73,7 @@ head app =
     []
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg) 
+view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg)
 view app shared model =
     { title =
         Project.lookup app.routeParams.slug
