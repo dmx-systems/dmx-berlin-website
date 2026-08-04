@@ -1,4 +1,4 @@
 DM6 Elm
 =======
 
-Bring-to-me navigation
+The screen, redesigned for focus

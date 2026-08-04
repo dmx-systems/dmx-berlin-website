@@ -4,7 +4,7 @@
   --bg-color: hsl(60, 56%, 91%);            /* "beige" */
   --bg-color-dimmed: hsl(60, 45%, 87%);
   --selection-color: hsl(240, 100%, 50%);   /* "blue" */
-  --padding: 0.3em 0.8em                    /* header and main */
+  --padding-left: 1em                       /* header and main */
 }
 
 html {
@@ -27,7 +27,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  padding: var(--padding);
+  padding: 0.3em var(--padding-left);
   background-color: var(--bg-color-dimmed);
 }
 
@@ -36,7 +36,7 @@ header #nav {
   gap: 2em;
 }
 
-header a, main a {
+header a {
   color: black;
   text-decoration: none;
 }
@@ -45,18 +45,30 @@ header a, main a {
 
 main {
   flex-grow: 1;
+  min-height: 0;
   display: flex;
-  padding: var(--padding);
+  padding-left: var(--padding-left);
+}
+
+main a {
+  color: black;
+}
+
+main nav a {
+  text-decoration: none;
 }
 
 main nav {
-  padding: 2.3em 4em 0 0;
-  flex-basis: 200px;
+  flex: 0 0 20%;
+  overflow: auto;
+  padding: 2em 2em 0 0;
   /* background-color: hsl(60, 45%, 87%); */
 }
 
 main #body {
   flex-grow: 1;
+  overflow: auto;
+  padding: 0 1em;
   /* background-color: honeydew; */
 }
 
@@ -98,6 +110,10 @@ main#project nav .selected a {
 main#project nav .tagline {
   font-size: var(--font-size-small);
   color: gray;
+}
+
+main#project img {
+  max-width: 100%;
 }
 
 /* footer */
