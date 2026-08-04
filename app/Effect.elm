@@ -13,6 +13,7 @@ import Pages.Fetcher
 import Url exposing (Url)
 
 
+
 {-| -}
 type Effect msg
     = None
@@ -44,10 +45,8 @@ map fn effect =
     case effect of
         None ->
             None
-
         Cmd cmd ->
             Cmd (Cmd.map fn cmd)
-
         Batch list ->
             Batch (List.map (map fn) list)
 
@@ -77,10 +76,8 @@ perform ({ fromPageMsg } as helpers) effect =
     case effect of
         None ->
             Cmd.none
-
         Cmd cmd ->
             Cmd.map fromPageMsg cmd
-
         Batch list ->
             Cmd.batch (List.map (perform helpers) list)
 

@@ -4,7 +4,7 @@ module Project exposing (RouteParams, Msg(..), Slug, all, viewNav, fromRoute, lo
 import PagesMsg exposing (PagesMsg)
 import Route exposing (Route(..))
 
-import Html exposing (Html, div, li, text, ul)
+import Html exposing (Html, b, div, li, text, ul)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
@@ -12,14 +12,17 @@ import Html.Events exposing (onClick)
 
 all : List Project
 all =
-    [ Project "Linqa is a bilingual whiteboard" "linqa"
-    , Project "DM6 Elm" "dm6-elm"
+    [ Project "DM6 Elm" "dm6-elm" "The screen, redesigned for focus"
+    , Project "Linqa" "linqa" "A bilingual whiteboard"
+    , Project "DMX" "dmx" "Platform for knowledge management and collaboration"
+    , Project "Elm Timelines" "elm-timelines" "Biographical timelines that deal with fuzzy memory"
     ]
 
 
 type alias Project =
     { name : String
     , slug : Slug
+    , tagline : String
     }
 
 
@@ -42,26 +45,28 @@ viewNav routeParams =
         (all |> List.map
             (\{slug} ->
                 let
-                    attrs =
+                    attr =
                         if routeParams.slug == slug then
                             [ class "selected" ]
                         else
                             []
                 in
-                li attrs [ viewLink slug ]
+                li attr [ link slug ]
             )
         )
     ]
 
 
-viewLink : Slug -> Html (PagesMsg Msg)
-viewLink slug =
+link : Slug -> Html (PagesMsg Msg)
+link slug =
     case lookup slug of
         Just project ->
             Route.Project__Slug_ { slug = slug }
                 |> Route.link
                     [ onClick (PagesMsg.fromMsg <| Clicked slug) ]
-                    [ text project.name ]
+                    [ b [] [ text project.name ]
+                    , div [ class "tagline" ] [ text project.tagline ]
+                    ]
         Nothing -> text "?"
 
 

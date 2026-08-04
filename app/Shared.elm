@@ -1,7 +1,7 @@
 module Shared exposing (Data, Model, Msg(..), template)
 
 import Project
-import SiteTemplate
+import DmxBerlin
 
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
@@ -13,8 +13,7 @@ import Route exposing (Route)
 import SharedTemplate exposing (SharedTemplate)
 import View exposing (View)
 
-import Html exposing (Attribute, Html)
-import Html.Attributes exposing (id)
+import Html exposing (Html)
 
 
 
@@ -38,8 +37,7 @@ type alias Data =
 
 
 type alias Model =
-    { selectedProject : Project.Slug
-    }
+    DmxBerlin.Model
 
 
 type alias PagePath =
@@ -89,18 +87,5 @@ view :
     Data -> { path : UrlPath, route : Maybe Route }
     -> Model -> (Msg -> msg) -> View msg
     -> { title : String, body : List (Html msg) }
-view sharedData {path} model toMsg page =
-    { title = "dmx.berlin - " ++ page.title
-    , body =
-        [ Html.header [] (SiteTemplate.viewHeader model.selectedProject)
-        , Html.main_ (mainAttr path) (SiteTemplate.viewMain page)
-        , Html.footer [] SiteTemplate.viewFooter
-        ]
-    }
-
-
-mainAttr : UrlPath -> List (Attribute msg)
-mainAttr path =
-    case path of
-        page :: _ -> [ id page ]
-        [] -> [ id "front" ]
+view _ {path} model _ page =
+    DmxBerlin.view path model page

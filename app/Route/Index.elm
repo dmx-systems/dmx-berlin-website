@@ -1,16 +1,13 @@
 module Route.Index exposing (ActionData, Data, Model, Msg, route)
 
-import Shared
-import View exposing (View)
+import DmxBerlin
 
 import BackendTask exposing (BackendTask)
 import FatalError exposing (FatalError)
 import Head
-import PagesMsg exposing (PagesMsg)
 import RouteBuilder exposing (App, StatelessRoute)
-
-import Html exposing (br, div, text)
-import Html.Attributes exposing (id)
+import Shared
+import View exposing (View)
 
 
 
@@ -53,18 +50,6 @@ head app =
     []
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> View (PagesMsg Msg)
+view : App Data ActionData RouteParams -> Shared.Model -> View msg
 view app sharedModel =
-    { title = "A Cognitive Home"
-    , body =
-        [ div []
-            [ div [ id "title" ] [ text "A Cognitive Home" ]
-            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
-            ]
-        , div [ id "profile" ]
-            [ text "Jörg Richter", br [] []
-            , text "Software Developer, Berlin"
-            ]
-        ]
-    , nav = Nothing
-    }
+    DmxBerlin.viewFront

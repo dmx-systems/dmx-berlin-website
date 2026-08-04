@@ -79,7 +79,9 @@ view app shared model =
         Project.lookup app.routeParams.slug
             |> Maybe.map .name
             |> Maybe.withDefault "?"
-    , body = app.data |> viewMarkdown
+    , body =
+        app.data
+            |> viewMarkdown
     , nav = Just (Project.viewNav app.routeParams)
     }
 

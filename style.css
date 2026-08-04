@@ -1,4 +1,6 @@
 :root {
+  --font-size: 16px;
+  --font-size-small: 14px;
   --bg-color: hsl(60, 56%, 91%);            /* "beige" */
   --bg-color-dimmed: hsl(60, 45%, 87%);
   --selection-color: hsl(240, 100%, 50%);   /* "blue" */
@@ -12,6 +14,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: var(--font-size);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -30,7 +33,7 @@ header {
 
 header #nav {
   display: flex;
-  gap: 1.5em;
+  gap: 2em;
 }
 
 header a, main a {
@@ -90,6 +93,11 @@ main#project nav ul {
 
 main#project nav .selected a {
   color: var(--selection-color);
+}
+
+main#project nav .tagline {
+  font-size: var(--font-size-small);
+  color: gray;
 }
 
 /* footer */
