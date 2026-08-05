@@ -6,7 +6,7 @@ import DmxBerlin
 import BackendTask exposing (BackendTask)
 import Effect exposing (Effect)
 import FatalError exposing (FatalError)
-import Pages.Flags
+import Pages.Flags exposing (Flags(..))
 import Pages.PageUrl exposing (PageUrl)
 import UrlPath exposing (UrlPath)
 import Route exposing (Route)
@@ -14,6 +14,7 @@ import SharedTemplate exposing (SharedTemplate)
 import View exposing (View)
 
 import Html exposing (Html)
+import Json.Decode as D
 
 
 
@@ -51,11 +52,24 @@ type alias PagePath =
     }
 
 
-init : Pages.Flags.Flags -> Maybe PagePath -> ( Model, Effect Msg )
+init : Flags -> Maybe PagePath -> ( Model, Effect Msg )
 init flags maybePagePath =
-    ( { selectedProject = initProject maybePagePath }
+    (   { windowWidth = initWindowWidth flags
+        , selectedProject = initProject maybePagePath
+        , navMode = False
+        }
     , Effect.none
     )
+
+
+initWindowWidth : Flags -> Maybe Int
+initWindowWidth flags =
+    case flags of
+        BrowserFlags value ->
+            case value |> D.decodeValue D.int of
+                Ok width -> Just width
+                Err e -> Nothing
+        PreRenderFlags -> Nothing
 
 
 initProject : Maybe PagePath -> Project.Slug

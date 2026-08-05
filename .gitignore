@@ -1,9 +1,8 @@
 .DS_Store
 node_modules/
 elm-stuff/
+gen/
 dist/
 deploy/
 review/
 .elm-pages/
-functions/render/elm-pages-cli.mjs
-functions/server-render/elm-pages-cli.mjs

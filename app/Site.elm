@@ -6,6 +6,7 @@ import Head
 import SiteConfig exposing (SiteConfig)
 
 
+
 config : SiteConfig
 config =
     { canonicalUrl = "https://dmx.berlin"
@@ -15,7 +16,5 @@ config =
 
 head : BackendTask FatalError (List Head.Tag)
 head =
-    [ Head.metaName "viewport" (Head.raw "width=device-width,initial-scale=1")
-    , Head.sitemapLink "/sitemap.xml"
-    ]
-        |> BackendTask.succeed
+    BackendTask.succeed
+        [ Head.metaName "viewport" (Head.raw "width=device-width,initial-scale=1") ]

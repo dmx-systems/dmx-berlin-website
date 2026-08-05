@@ -12,8 +12,14 @@ import Html.Attributes exposing (href, id)
 
 
 
+screenThreshold = 640
+
+
 type alias Model =
-    { selectedProject : Project.Slug }
+    { windowWidth : Maybe Int -- not available at build time
+    , selectedProject : Project.Slug
+    , navMode : Bool          -- only used for small screens
+    }
 
 
 view : UrlPath -> Model -> View msg -> { title : String, body : List (Html msg) }
@@ -27,7 +33,11 @@ view path model page =
     { title = "dmx.berlin - " ++ page.title
     , body =
         [ Html.header [] (viewHeader model.selectedProject)
-        , Html.main_ mainAttr (viewMain page)
+        , Html.main_ mainAttr
+            (   viewNav page model
+                ++
+                [ div [ id "body" ] page.body ]
+            )
         , Html.footer [] viewFooter
         ]
     }
@@ -45,14 +55,24 @@ viewHeader selectedProject =
     ]
 
 
-viewMain : View msg -> List (Html msg)
-viewMain page =
-    (case page.nav of
-        Just nav -> [ Html.nav [] nav ]
+viewNav : View msg -> Model -> List (Html msg)
+viewNav page model =
+    case page.nav of
+        Just nav ->
+            if not (isSmallScreen model) || model.navMode then
+                [ Html.nav [] nav ]
+            else
+                []
         Nothing -> []
-    )
-    ++
-    [ div [ id "body" ] page.body ]
+
+
+isSmallScreen : Model -> Bool
+isSmallScreen model =
+    case model.windowWidth of
+        Just width ->
+            width < screenThreshold
+        Nothing ->
+            False -- prerender both, nav and body
 
 
 viewFooter : List (Html msg)
