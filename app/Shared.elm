@@ -1,4 +1,4 @@
-module Shared exposing (Data, Model, Msg(..), template)
+module Shared exposing (Data, Model, Msg, template)
 
 import Project
 import DmxBerlin
@@ -29,16 +29,16 @@ template =
     }
 
 
-type Msg
-    = SelectProject Project.Slug
+type alias Model =
+    DmxBerlin.Model
+
+
+type alias Msg
+    = DmxBerlin.Msg
 
 
 type alias Data =
     ()
-
-
-type alias Model =
-    DmxBerlin.Model
 
 
 type alias PagePath =
@@ -83,8 +83,16 @@ initProject maybePagePath =
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        SelectProject slug ->
-            ( { model | selectedProject = slug }, Effect.none )
+        DmxBerlin.EnterNavMode ->
+            ( { model | navMode = True }
+            , Effect.none
+            )
+        DmxBerlin.SelectProject slug ->
+            ( { model | selectedProject = slug
+                      , navMode = False
+              }
+            , Effect.none
+            )
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
@@ -101,5 +109,5 @@ view :
     Data -> { path : UrlPath, route : Maybe Route }
     -> Model -> (Msg -> msg) -> View msg
     -> { title : String, body : List (Html msg) }
-view _ {path} model _ page =
-    DmxBerlin.view path model page
+view _ {path} model toMsg page =
+    DmxBerlin.view path model toMsg page

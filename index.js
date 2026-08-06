@@ -4,7 +4,7 @@ const config = {
         console.log("App loaded", app);
     },
     flags: function () {
-        console.log("----> Window width", window.innerWidth)
+        console.log("[dmx-berlin-website] Window width", window.innerWidth)
         return window.innerWidth;
     },
 };

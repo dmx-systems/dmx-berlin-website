@@ -1,4 +1,4 @@
-module DmxBerlin exposing (Model, view, viewFront)
+module DmxBerlin exposing (Model, Msg(..), view, viewFront)
 
 import Project
 
@@ -9,6 +9,7 @@ import View exposing (View)
 
 import Html exposing (Html, a, br, div, text)
 import Html.Attributes exposing (href, id)
+import Html.Events exposing (onClick)
 
 
 
@@ -22,8 +23,15 @@ type alias Model =
     }
 
 
-view : UrlPath -> Model -> View msg -> { title : String, body : List (Html msg) }
-view path model page =
+type Msg
+    = EnterNavMode
+    | SelectProject Project.Slug
+
+
+view :
+    UrlPath -> Model -> (Msg -> msg) -> View msg
+    -> { title : String, body : List (Html msg) }
+view path model toMsg page =
     let
         mainAttr =
             case path of
@@ -32,38 +40,67 @@ view path model page =
     in
     { title = "dmx.berlin - " ++ page.title
     , body =
-        [ Html.header [] (viewHeader model.selectedProject)
-        , Html.main_ mainAttr
-            (   viewNav page model
-                ++
-                [ div [ id "body" ] page.body ]
-            )
+        [ Html.header [] (viewHeader model toMsg)
+        , Html.main_ mainAttr (viewMain page model)
         , Html.footer [] viewFooter
         ]
     }
 
 
-viewHeader : Project.Slug -> List (Html msg)
-viewHeader selectedProject =
+viewFront : View msg
+viewFront =
+    { title = "A Cognitive Home"
+    , body =
+        [ div []
+            [ div [ id "title" ] [ text "A Cognitive Home" ]
+            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
+            ]
+        , div [ id "profile" ]
+            [ text "Jörg Richter", br [] []
+            , text "Software Developer, Berlin"
+            ]
+        ]
+    , nav = Nothing
+    }
+
+
+viewHeader : Model -> (Msg -> msg) -> List (Html msg)
+viewHeader model toMsg =
     [ div [ id "home" ]
-        [ Route.Index |> Route.link [] [ text "dmx.berlin" ] ]
+        [ Route.link
+            []
+            [ text "dmx.berlin" ]
+            Route.Index
+        ]
     , div [ id "nav" ]
         [ a [ href "https://forum.dmx.berlin" ] [ text "Forum" ]
-        , Route.Project__Slug_ { slug = selectedProject }
-            |> Route.link [] [ text "Projects" ]
+        , Route.link
+            [ onClick <| toMsg EnterNavMode ]
+            [ text "Projects" ]
+            (Route.Project__Slug_ { slug = model.selectedProject })
         ]
     ]
 
 
-viewNav : View msg -> Model -> List (Html msg)
-viewNav page model =
-    case page.nav of
-        Just nav ->
-            if not (isSmallScreen model) || model.navMode then
-                [ Html.nav [] nav ]
+viewMain : View msg -> Model -> List (Html msg)
+viewMain page model =
+    let
+        isBigScreen = not (isSmallScreen model)
+        viewNav =
+            case page.nav of
+                Just nav ->
+                    if isBigScreen || model.navMode then
+                        [ Html.nav [] nav ]
+                    else
+                        []
+                Nothing -> []
+        viewBody =
+            if isBigScreen || not model.navMode then
+                [ div [ id "body" ] page.body ]
             else
                 []
-        Nothing -> []
+    in
+    viewNav ++ viewBody
 
 
 isSmallScreen : Model -> Bool
@@ -86,20 +123,3 @@ viewFooter =
             [ Icon.mail |> Icon.toHtml [] ]
         ]
     ]
-
-
-viewFront : View msg
-viewFront =
-    { title = "A Cognitive Home"
-    , body =
-        [ div []
-            [ div [ id "title" ] [ text "A Cognitive Home" ]
-            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
-            ]
-        , div [ id "profile" ]
-            [ text "Jörg Richter", br [] []
-            , text "Software Developer, Berlin"
-            ]
-        ]
-    , nav = Nothing
-    }

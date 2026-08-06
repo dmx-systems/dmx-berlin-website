@@ -1,5 +1,5 @@
-module Project exposing (RouteParams, Msg(..), Slug, all, viewNav, fromRoute, lookup,
-    default)
+module Project exposing (RouteParams, Msg(..), Slug, all, viewNav, fromRoute,
+    lookup, default)
 
 import PagesMsg exposing (PagesMsg)
 import Route exposing (Route(..))
@@ -15,7 +15,8 @@ all =
     [ Project "DM6 Elm" "dm6-elm" "The screen, redesigned for focus"
     , Project "Linqa" "linqa" "A bilingual whiteboard"
     , Project "DMX" "dmx" "Platform for knowledge management and collaboration"
-    , Project "Elm Timelines" "elm-timelines" "Biographical timelines that can deal with fuzzy memory"
+    , Project "Elm Timelines" "elm-timelines"
+        "Biographical timelines that can deal with fuzzy memory"
     ]
 
 

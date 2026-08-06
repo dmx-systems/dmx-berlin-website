@@ -1,5 +1,6 @@
 module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
 
+import DmxBerlin
 import Project exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
@@ -73,7 +74,9 @@ head app =
     []
 
 
-view : App Data ActionData RouteParams -> Shared.Model -> Model -> View (PagesMsg Msg)
+view :
+    App Data ActionData RouteParams -> Shared.Model -> Model
+    -> View (PagesMsg Msg)
 view app shared model =
     { title =
         Project.lookup app.routeParams.slug
@@ -82,7 +85,8 @@ view app shared model =
     , body =
         app.data
             |> viewMarkdown
-    , nav = Just (Project.viewNav app.routeParams)
+    , nav =
+        Just (Project.viewNav app.routeParams)
     }
 
 
@@ -97,7 +101,7 @@ update :
 update app shared msg model =
     case msg of
         Project.Clicked slug ->
-            ( model, Effect.none, Just <| Shared.SelectProject slug )
+            ( model, Effect.none, Just <| DmxBerlin.SelectProject slug )
 
 
 subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg
