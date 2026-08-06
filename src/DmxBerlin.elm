@@ -8,16 +8,16 @@ import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 import Html exposing (Html, a, br, div, text)
-import Html.Attributes exposing (href, id)
+import Html.Attributes exposing (class, href, id)
 import Html.Events exposing (onClick)
 
 
 
-screenThreshold = 640
+screenThreshold = 640 -- width
 
 
 type alias Model =
-    { windowWidth : Maybe Int -- not available at build time
+    { windowWidth : Maybe Int -- not available at pre-render time
     , selectedProject : Project.Slug
     , navMode : Bool          -- only used for small screens
     }
@@ -33,15 +33,22 @@ view :
     -> { title : String, body : List (Html msg) }
 view path model toMsg page =
     let
-        mainAttr =
+        mainId =
             case path of
-                segment :: _ -> [ id segment ]
-                [] -> [ id "front" ]
+                segment :: _ -> segment
+                [] -> "front"
+        mainClass =
+            if isSmallScreen model then
+                [ class "small-screen" ]
+            else
+                []
     in
     { title = "dmx.berlin - " ++ page.title
     , body =
         [ Html.header [] (viewHeader model toMsg)
-        , Html.main_ mainAttr (viewMain page model)
+        , Html.main_
+            ([ id mainId ] ++ mainClass)
+            (viewMain page model)
         , Html.footer [] viewFooter
         ]
     }
@@ -86,16 +93,17 @@ viewMain : View msg -> Model -> List (Html msg)
 viewMain page model =
     let
         isBigScreen = not (isSmallScreen model)
-        viewNav =
+        (hasNav, viewNav) =
             case page.nav of
                 Just nav ->
                     if isBigScreen || model.navMode then
-                        [ Html.nav [] nav ]
+                        (True, [ Html.nav [] nav ])
                     else
-                        []
-                Nothing -> []
+                        (True, [])
+                Nothing ->
+                    (False, [])
         viewBody =
-            if isBigScreen || not model.navMode then
+            if isBigScreen || not hasNav || not model.navMode then
                 [ div [ id "body" ] page.body ]
             else
                 []
@@ -109,7 +117,7 @@ isSmallScreen model =
         Just width ->
             width < screenThreshold
         Nothing ->
-            False -- prerender both, nav and body
+            False -- pre-render both, nav and body
 
 
 viewFooter : List (Html msg)

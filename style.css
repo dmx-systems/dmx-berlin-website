@@ -4,7 +4,7 @@
   --bg-color: hsl(60, 56%, 91%);            /* "beige" */
   --bg-color-dimmed: hsl(60, 45%, 86%);
   --selection-color: hsl(240, 100%, 50%);   /* "blue" */
-  --padding-left: 1em                       /* header and main */
+  --padding-horiz: 1em                      /* header and main */
 }
 
 html {
@@ -27,7 +27,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  padding: 0.3em var(--padding-left);
+  padding: 0.3em var(--padding-horiz);
   background-color: var(--bg-color-dimmed);
 }
 
@@ -47,7 +47,7 @@ main {
   flex-grow: 1;
   min-height: 0;
   display: flex;
-  padding-left: var(--padding-left);
+  padding: 0 var(--padding-horiz);
 }
 
 main a {
@@ -65,11 +65,20 @@ main nav {
   /* background-color: honeydew; */
 }
 
+main.small-screen nav {
+  flex: auto;
+  padding: 2em 0 0 0;
+}
+
 main #body {
   flex-grow: 1;
   overflow: auto;
-  padding: 0 1em;
+  padding-left: 2em;
   /* background-color: honeydew; */
+}
+
+main.small-screen #body {
+  padding-left: 0;
 }
 
 /* front page */
