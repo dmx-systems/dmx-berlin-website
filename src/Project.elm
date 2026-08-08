@@ -12,7 +12,7 @@ import Html.Events exposing (onClick)
 
 all : List Project
 all =
-    [ Project "DM6 Elm" "dm6-elm" "The screen, redesigned for focus"
+    [ Project "DM6 Elm" "dm6-elm" "An user interface to support focus"
     , Project "Linqa" "linqa" "A bilingual whiteboard"
     , Project "DMX" "dmx" "Platform for knowledge management and collaboration"
     , Project "Elm Timelines" "elm-timelines"
