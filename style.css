@@ -47,7 +47,7 @@ main {
   flex-grow: 1;
   min-height: 0;
   display: flex;
-  padding: 0 var(--padding-horiz);
+  padding-left: var(--padding-horiz);
 }
 
 main a {
@@ -61,19 +61,19 @@ main nav a {
 main nav {
   flex: 0 0 20%;
   overflow: auto;
-  padding: 2em 2em 0 0;
+  padding: 2em 1em 0 0;
   /* background-color: honeydew; */
 }
 
 main.small-screen nav {
   flex: auto;
-  padding: 2em 0 0 0;
 }
 
 main #body {
   flex-grow: 1;
   overflow: auto;
   padding-left: 2em;
+  padding-right: var(--padding-horiz);
   /* background-color: honeydew; */
 }
 
