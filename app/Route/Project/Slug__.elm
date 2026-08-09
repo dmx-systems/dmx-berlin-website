@@ -1,4 +1,4 @@
-module Route.Project.Slug_ exposing (ActionData, Data, Model, Msg, route)
+module Route.Project.Slug__ exposing (ActionData, Data, Model, Msg, route)
 
 import DmxBerlin
 import Project exposing (RouteParams)
@@ -30,7 +30,11 @@ type alias Msg =
 
 
 type alias Data =
-    Project.Slug
+    Maybe Markdown
+
+
+type alias Markdown =
+    String
 
 
 type alias ActionData =
@@ -54,19 +58,21 @@ route =
 
 pages : BackendTask FatalError (List RouteParams)
 pages =
-    BackendTask.succeed
-        (Project.all
-            |> List.map (\{slug} -> { slug = slug })
-        )
+    Project.all
+        |> List.map (\{slug} -> RouteParams (Just slug))
+        |> (::) (RouteParams Nothing)
+        |> BackendTask.succeed
 
 
 data : RouteParams -> BackendTask FatalError Data
 data routeParams =
-    let
-        file = "content/projects/" ++ routeParams.slug ++ ".md"
-    in
-    File.rawFile file
-        |> BackendTask.allowFatal
+    case routeParams.slug of
+        Just slug ->
+            File.rawFile ("content/projects/" ++ slug ++ ".md")
+                |> BackendTask.map Just
+                |> BackendTask.allowFatal
+        Nothing ->
+            BackendTask.succeed Nothing
 
 
 head : App Data ActionData RouteParams -> List Head.Tag
@@ -79,12 +85,15 @@ view :
     -> View (PagesMsg Msg)
 view app shared model =
     { title =
-        Project.lookup app.routeParams.slug
-            |> Maybe.map .name
-            |> Maybe.withDefault "?"
+        case app.routeParams.slug of
+            Just slug ->
+                Project.lookup slug
+                    |> Maybe.map .name
+                    |> Maybe.withDefault "?" -- error (lookup failed)
+            Nothing -> "Projects"
     , body =
         app.data
-            |> viewMarkdown
+            |> Maybe.map viewMarkdown
     , nav =
         Just (Project.viewNav app.routeParams)
     }

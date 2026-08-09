@@ -58,17 +58,18 @@ view error model =
             InternalError string ->
                 "Unexpected Error"
     , body =
-        [ Html.div []
-            [ Html.p []
-                [ Html.text <|
-                    case error of
-                        NotFound ->
-                            "Page not found. Maybe try another URL?"
-                        InternalError string ->
-                            "Something went wrong.\n" ++ string
+        Just
+            [ Html.div []
+                [ Html.p []
+                    [ Html.text <|
+                        case error of
+                            NotFound ->
+                                "Page not found. Maybe try another URL?"
+                            InternalError string ->
+                                "Something went wrong.\n" ++ string
+                    ]
                 ]
             ]
-        ]
     , nav = Nothing
     }
 

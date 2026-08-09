@@ -9,7 +9,6 @@ import View exposing (View)
 
 import Html exposing (Html, a, br, div, text)
 import Html.Attributes exposing (class, href, id)
-import Html.Events exposing (onClick)
 
 
 
@@ -19,13 +18,11 @@ screenThreshold = 640 -- width
 type alias Model =
     { windowWidth : Maybe Int -- not available at pre-render time
     , selectedProject : Project.Slug
-    , navMode : Bool          -- only used for small screens
     }
 
 
 type Msg
-    = EnterNavMode
-    | SelectProject Project.Slug
+    = SelectProject Project.Slug
 
 
 view :
@@ -56,23 +53,35 @@ view path model toMsg page =
 
 viewFront : View msg
 viewFront =
-    { title = "A Cognitive Home"
+    { title = "The screen, redesigned for focus"
     , body =
-        [ div []
-            [ div [ id "title" ] [ text "A Cognitive Home" ]
-            , div [ id "subtitle" ] [ text "The screen, redesigned for focus" ]
+        Just
+            [ div []
+                [ div
+                    [ id "title" ]
+                    [ text "A Cognitive Home" ]
+                , div
+                    [ id "subtitle" ]
+                    [ text "The screen, redesigned for focus" ]
+                ]
+            , div [ id "profile" ]
+                [ text "Jörg Richter", br [] []
+                , text "Software Developer, Berlin"
+                ]
             ]
-        , div [ id "profile" ]
-            [ text "Jörg Richter", br [] []
-            , text "Software Developer, Berlin"
-            ]
-        ]
     , nav = Nothing
     }
 
 
 viewHeader : Model -> (Msg -> msg) -> List (Html msg)
 viewHeader model toMsg =
+    let
+        slug =
+            if isSmallScreen model then
+                Nothing
+            else
+                Just model.selectedProject
+    in
     [ div [ id "home" ]
         [ Route.link
             []
@@ -82,9 +91,9 @@ viewHeader model toMsg =
     , div [ id "nav" ]
         [ a [ href "https://forum.dmx.berlin" ] [ text "Forum" ]
         , Route.link
-            [ onClick <| toMsg EnterNavMode ]
+            []
             [ text "Projects" ]
-            (Route.Project__Slug_ { slug = model.selectedProject })
+            (Route.Project__Slug__ { slug = slug })
         ]
     ]
 
@@ -93,18 +102,24 @@ viewMain : View msg -> Model -> List (Html msg)
 viewMain page model =
     let
         isBigScreen = not (isSmallScreen model)
-        (hasNav, viewNav) =
+        isNavOnlyRoute = page.body == Nothing
+        viewNav =
             case page.nav of
                 Just nav ->
-                    if isBigScreen || model.navMode then
-                        (True, [ Html.nav [] nav ])
+                    if isBigScreen || isNavOnlyRoute then
+                        [ Html.nav [] nav ]
                     else
-                        (True, [])
+                        []
                 Nothing ->
-                    (False, [])
+                    []
         viewBody =
-            if isBigScreen || not hasNav || not model.navMode then
-                [ div [ id "body" ] page.body ]
+            if not isNavOnlyRoute then
+                [ div
+                    [ id "body" ]
+                    (page.body
+                        |> Maybe.withDefault [ text "?" ] -- error (body missing)
+                    )
+                ]
             else
                 []
     in

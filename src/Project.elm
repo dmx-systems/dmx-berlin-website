@@ -28,7 +28,7 @@ type alias Project =
 
 
 type alias RouteParams =
-    { slug : Slug }
+    { slug : Maybe Slug }
 
 
 type Msg =
@@ -43,17 +43,22 @@ viewNav : RouteParams -> List (Html (PagesMsg Msg))
 viewNav routeParams =
     [ div [] [ text "Projects" ]
     , ul []
-        (all |> List.map
-            (\{slug} ->
-                let
-                    attr =
-                        if routeParams.slug == slug then
-                            [ class "selected" ]
-                        else
-                            []
-                in
-                li attr [ link slug ]
-            )
+        (all
+            |> List.map
+                (\{slug} ->
+                    let
+                        attr =
+                            case routeParams.slug of
+                                Just slug_ ->
+                                    if slug_ == slug then
+                                        [ class "selected" ]
+                                    else
+                                        []
+                                Nothing ->
+                                    []
+                    in
+                    li attr [ link slug ]
+                )
         )
     ]
 
@@ -62,19 +67,19 @@ link : Slug -> Html (PagesMsg Msg)
 link slug =
     case lookup slug of
         Just project ->
-            Route.Project__Slug_ { slug = slug }
+            Route.Project__Slug__ { slug = Just slug }
                 |> Route.link
                     [ onClick (PagesMsg.fromMsg <| Clicked slug) ]
                     [ b [] [ text project.name ]
                     , div [ class "tagline" ] [ text project.tagline ]
                     ]
-        Nothing -> text "?"
+        Nothing -> text "?" -- error (lookup failed)
 
 
 fromRoute : Route -> Maybe Slug
 fromRoute route =
     case route of
-        Project__Slug_ { slug } -> Just slug
+        Project__Slug__ { slug } -> slug
         _ -> Nothing
 
 
@@ -93,4 +98,4 @@ default : Slug
 default =
     case all of
         project :: _ -> project.slug
-        [] -> "?"
+        [] -> "?" -- error (no projects defined)

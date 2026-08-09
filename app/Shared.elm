@@ -56,7 +56,6 @@ init : Flags -> Maybe PagePath -> ( Model, Effect Msg )
 init flags maybePagePath =
     (   { windowWidth = initWindowWidth flags
         , selectedProject = initProject maybePagePath
-        , navMode = False
         }
     , Effect.none
     )
@@ -83,14 +82,8 @@ initProject maybePagePath =
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        DmxBerlin.EnterNavMode ->
-            ( { model | navMode = True }
-            , Effect.none
-            )
         DmxBerlin.SelectProject slug ->
-            ( { model | selectedProject = slug
-                      , navMode = False
-              }
+            ( { model | selectedProject = slug }
             , Effect.none
             )
 
