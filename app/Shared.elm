@@ -1,4 +1,4 @@
-module Shared exposing (Data, Model, Msg, template)
+port module Shared exposing (Data, Model, Msg, template)
 
 import Project
 import DmxBerlin
@@ -18,6 +18,16 @@ import Json.Decode as D
 
 
 
+-- PORTS
+
+
+port onResize : (Int -> msg) -> Sub msg
+
+
+
+-- MAIN
+
+
 template : SharedTemplate Msg Model Data msg
 template =
     { init = init
@@ -33,8 +43,8 @@ type alias Model =
     DmxBerlin.Model
 
 
-type alias Msg
-    = DmxBerlin.Msg
+type alias Msg =
+    DmxBerlin.Msg
 
 
 type alias Data =
@@ -86,11 +96,16 @@ update msg model =
             ( { model | selectedProject = slug }
             , Effect.none
             )
+        DmxBerlin.WindowResized width ->
+            ( { model | windowWidth = Just width }
+            , Effect.none
+            )
+
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
 subscriptions _ _ =
-    Sub.none
+    onResize DmxBerlin.WindowResized
 
 
 data : BackendTask FatalError Data

@@ -16,13 +16,14 @@ screenThreshold = 640 -- width
 
 
 type alias Model =
-    { windowWidth : Maybe Int -- not available at pre-render time
-    , selectedProject : Project.Slug
+    { selectedProject : Project.Slug
+    , windowWidth : Maybe Int -- not available at pre-render time
     }
 
 
 type Msg
     = SelectProject Project.Slug
+    | WindowResized Int -- width
 
 
 view :
