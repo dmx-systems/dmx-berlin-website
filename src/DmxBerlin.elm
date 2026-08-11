@@ -90,7 +90,7 @@ viewHeader model toMsg =
             Route.Index
         ]
     , div [ id "nav" ]
-        [ a [ href "https://forum.dmx.berlin" ] [ text "Forum" ]
+        [ a [ href "https://forum.dmx.berlin" ] [ text "DMX Forum" ]
         , Route.link
             []
             [ text "Projects" ]

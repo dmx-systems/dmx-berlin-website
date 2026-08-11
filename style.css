@@ -125,6 +125,12 @@ main#project img {
   max-width: 100%;
 }
 
+main#project em {
+  color: var(--selection-color);
+  font-style: normal;
+  background-color: white;
+}
+
 /* footer */
 
 footer {
