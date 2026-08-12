@@ -26,7 +26,7 @@ No installation required. No account required. You can use DM6 Elm by visiting
 
 You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. You can nest topics by dropping them on each other. Create associations (lines) between topics by click-and-hold and wait a short moment before dragging.
 
-Getting help
-------------
+Getting support
+---------------
 
-For discussing DM6 Elm and for getting help please use the [DMX Forum](https://forum.dmx.berlin).
+For discussing DM6 Elm and for getting support please use the [DMX Forum](https://forum.dmx.berlin).
