@@ -22,7 +22,7 @@ Visit the [Linqa website](https://linqa.eu) and blog.
 
 [▶ Watch the Linqa video](/linqa-video.mp4).
 
-Download the [Linqa brochure (PDF)](/lq-brochure-print.pdf).
+Download the [Linqa brochure (PDF)](/linqa-brochure.pdf).
 
 ### Try out
 
@@ -30,7 +30,9 @@ Go to the [Linqa website](https://linqa.eu) and request access to the [Linqa dem
 
 The demo user account is a full Linqa administrator account. So you can create user accounts to test Linqa's collaboration features as well. Note that account creation is based on real email addresses. For a description of the administrative features please see [Create users and workspaces](https://github.com/dmx-systems/dmx-linqa#create-users-and-workspaces) in the Linqa README.
 
-### Install at your server
+### Self-hosting
+
+You can self-host Linqa on your own server. Linqa requires Java 8 to be installed on the server. For the account/password related workflows Linqa relies on an infrastructure for sending email. For a complete Linqa installation guide see the [Linqa README](https://github.com/dmx-systems/dmx-linqa/).
 
 ### Getting support
 

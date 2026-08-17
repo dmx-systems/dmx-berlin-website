@@ -9,24 +9,23 @@ The 6th version of the 25+ years running Open Source project "DeepaMehta", rewri
 
 ![DM6 Elm screenshot](/dm6-elm.png)
 
-Overview
---------
+### Overview
 
 A DM6 Elm screen consists of *topics* and *associations*.
 
-Topics appear as rectangles with text in it. It can be a single word or an entire article with several paragraphs multi-level headings, and images. You can make use of bold, italic, and insert lists. DM6 Elm uses **Markdown** for editing and displaying text. Have a look to the [Markdown Guide](https://www.markdownguide.org).
+Topics appear as rectangles with text in it. It can be a single word or an entire article with several paragraphs, multi-level headings, and images. You can make use of bold, italic, and insert lists. DM6 Elm uses **Markdown** for editing and displaying text. Have a look to the [Markdown Guide](https://www.markdownguide.org).
 
-An associations is a connection between 2 topics, appearing as a line. Use associations to represent a meaningful relationships. Associations facilitates both, an illustration-like expressive display, and associative browsing.
+An associations is a connection between 2 topics, appearing as a line. Use associations to represent meaningful relationships. Associations facilitates both, an illustration-like expressive display, and associative browsing.
 
-Try it
-------
+### Try out
 
 No installation required. No account required. You can use DM6 Elm by visiting  
 [https://dmx-systems.github.io/dm6-elm-demo/](https://dmx-systems.github.io/dm6-elm-demo/)
 
 You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. You can nest topics by dropping them on each other. Create associations (lines) between topics by click-and-hold and wait a short moment before dragging.
 
-Getting support
----------------
+The content you create is stored locally **in your browser**. When you revisit that link later on, your content will be available. To transfer your content to another browser, use DM6 Elm's import/export feature (see top/left menu).
+
+### Getting support
 
 For discussing DM6 Elm and for getting support please use the [DMX Forum](https://forum.dmx.berlin).
