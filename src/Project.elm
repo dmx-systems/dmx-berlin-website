@@ -56,8 +56,12 @@ viewNav routeParams =
                                         []
                                 Nothing ->
                                     []
+                        enabled = -- TODO: drop
+                            [ "dm6-elm", "linqa" ] |> List.member slug
+                        linkFunc = -- TODO: drop
+                            if enabled then link else disabledLink
                     in
-                    li attr [ link slug ]
+                    li attr [ linkFunc slug ]
                 )
         )
     ]
@@ -73,6 +77,19 @@ link slug =
                     [ b [] [ text project.name ]
                     , div [ class "tagline" ] [ text project.tagline ]
                     ]
+        Nothing -> text "?" -- error (lookup failed)
+
+
+-- TODO: drop
+disabledLink : Slug -> Html (PagesMsg Msg)
+disabledLink slug =
+    case lookup slug of
+        Just project ->
+            div
+                []
+                [ b [] [ text project.name ]
+                , div [ class "tagline" ] [ text project.tagline ]
+                ]
         Nothing -> text "?" -- error (lookup failed)
 
 
