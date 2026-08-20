@@ -5,27 +5,32 @@ An user interface to support focus.
 
 For knowledge workers of all kinds, in particular ADHD people.
 
-The 6th version of the 25+ years running Open Source project "DeepaMehta", rewritten in Elm.
+DM6 Elm is the 6th version of the 25+ years running Open Source project "DeepaMehta", rewritten in Elm (see also the [DMX](/project/dmx) project).
 
 ![DM6 Elm screenshot](/dm6-elm.png)
 
 ### Overview
 
-A DM6 Elm screen consists of *topics* and *associations*.
+A DM6 Elm screen consists of *topics* and *associations*. Topics are content holders (text, images, ...). Associations are relationships between 2 topics that facilitates both, a rich information display, and associative browsing. Topics and associations can be nested in other topics (called *boxes* then).
 
-Topics appear as rectangles with text in it. It can be a single word or an entire article with several paragraphs, multi-level headings, and images. You can make use of bold, italic, and insert lists. DM6 Elm uses **Markdown** for editing and displaying text. Have a look to the [Markdown Guide](https://www.markdownguide.org).
-
-An associations is a connection between 2 topics, appearing as a line. Use associations to represent meaningful relationships. Associations facilitates both, an illustration-like expressive display, and associative browsing.
+Topic content is stored and edited as **Markdown** (like e.g. in [Obsidian](https://obsidian.md) or GitHub). So you have headings, paragraphs, bold, italic, links, lists, ... and you can insert images. Have a look to the [Markdown Guide](https://www.markdownguide.org).
 
 ### Try out
 
-No installation required. No account required. You can use DM6 Elm by visiting  
+No installation required, no account required. DM6 Elm is a local-first application. To use DM6 Elm visit this link:  
 [https://dmx-systems.github.io/dm6-elm-demo/](https://dmx-systems.github.io/dm6-elm-demo/)
 
-You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. You can nest topics by dropping them on each other. Create associations (lines) between topics by click-and-hold and wait a short moment before dragging.
+You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. Nest topics by dropping them on each other. Create associations by click-and-hold a topic, wait a short moment, then drag.
 
-The content you create is stored locally **in your browser**. When you revisit that link later on, your content will be available. To transfer your content to another browser, use DM6 Elm's import/export feature (see top/left menu).
+Content you create is stored locally **in your browser**. When you close the browser window and revisit the above link later on, your content will show up again. To transfer content to another browser, use the import/export feature (see DM6 Elm's top/left menu).
 
-### Getting support
+### Support
 
-For discussing DM6 Elm and for getting support please use the [DMX Forum](https://forum.dmx.berlin).
+For getting support and for general discussion please use the [DMX Forum](https://forum.dmx.berlin).
+
+For specific bug reports or feature requests please create an issue:  
+[https://github.com/dmx-systems/dm6-elm/issues](https://github.com/dmx-systems/dm6-elm/issues)
+
+### Source code
+
+[https://github.com/dmx-systems/dm6-elm](https://github.com/dmx-systems/dm6-elm)

@@ -1,8 +1,8 @@
 .DS_Store
 node_modules/
 elm-stuff/
-gen/
 dist/
-deploy/
+gen/
 review/
+scripts/
 .elm-pages/
