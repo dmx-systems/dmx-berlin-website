@@ -56,23 +56,12 @@ route =
             }
 
 
--- pages : BackendTask FatalError (List RouteParams)
--- pages =
---     Project.all
---         |> List.map (\{slug} -> RouteParams (Just slug))
---         |> (::) (RouteParams Nothing)
---         |> BackendTask.succeed
-
-
--- TODO: drop
 pages : BackendTask FatalError (List RouteParams)
 pages =
-    [ RouteParams <| Just "dm6-elm"
-    , RouteParams <| Just "linqa"
-    , RouteParams <| Just "elm-timelines"
-    , RouteParams Nothing
-    ]
-    |> BackendTask.succeed
+    Project.all
+        |> List.map (\{slug} -> RouteParams (Just slug))
+        |> (::) (RouteParams Nothing)
+        |> BackendTask.succeed
 
 
 data : RouteParams -> BackendTask FatalError Data

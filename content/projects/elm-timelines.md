@@ -9,11 +9,11 @@ Despite Elm Timelines models and visualizes time it is not a calendar applicatio
 
 ### Try Elm Timelines
 
-You can use Elm Timelines right away by visiting the following link. No account is required. Content you create is stored locally **in your browser** and stays there. When you close the browser window and revisit that link later on, your content will show up again.
+You can use Elm Timelines right away by visiting the following link. No account required. Content you create is stored locally **in your browser** and stays there. When you close the browser window and revisit that link later on, your content will show up again.
 
 [https://jri.github.io/elm-timelines/elm-timelines.html](https://jri.github.io/elm-timelines/elm-timelines.html)
 
-For Elm Timelines usage instructions see the [README](https://github.com/jri/elm-timelines#elm-timelines). There you'll find also hints about working offline, or how to transfer your Elm Timeslines content to another browser.
+For Elm Timelines usage instructions see the [README](https://github.com/jri/elm-timelines#elm-timelines). There you'll find also hints about working offline, or how to transfer your Elm Timelines content to another browser.
 
 ### Support
 
