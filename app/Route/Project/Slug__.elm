@@ -69,6 +69,7 @@ pages : BackendTask FatalError (List RouteParams)
 pages =
     [ RouteParams <| Just "dm6-elm"
     , RouteParams <| Just "linqa"
+    , RouteParams <| Just "elm-timelines"
     , RouteParams Nothing
     ]
     |> BackendTask.succeed

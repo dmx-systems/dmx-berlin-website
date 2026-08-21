@@ -13,8 +13,8 @@ import Html.Events exposing (onClick)
 all : List Project
 all =
     [ Project "DM6 Elm" "dm6-elm" "An user interface to support focus"
-    , Project "Linqa" "linqa" "A bilingual whiteboard"
-    , Project "DMX" "dmx" "Platform for knowledge management and collaboration"
+    , Project "Linqa" "linqa" "A bilingual whiteboard for international collaboration"
+    , Project "DMX Platform" "dmx-platform" "Platform for knowledge building, data modeling, and collaboration"
     , Project "Elm Timelines" "elm-timelines"
         "Biographical timelines that can deal with fuzzy memory"
     ]
@@ -57,7 +57,7 @@ viewNav routeParams =
                                 Nothing ->
                                     []
                         enabled = -- TODO: drop
-                            [ "dm6-elm", "linqa" ] |> List.member slug
+                            [ "dm6-elm", "linqa", "elm-timelines" ] |> List.member slug
                         linkFunc = -- TODO: drop
                             if enabled then link else disabledLink
                     in
