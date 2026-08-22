@@ -18,8 +18,8 @@ import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer
 
-import Html exposing (Html, text, video)
-import Html.Attributes exposing (controls, src)
+import Html exposing (Html, a, text, video)
+import Html.Attributes exposing (controls, href, src, target)
 
 
 
@@ -139,10 +139,19 @@ renderer =
         default = Markdown.Renderer.defaultHtmlRenderer
     in
     { default | html =
-        Markdown.Html.tag "video"
-            (\src_ children -> video
-                [ src src_, controls True ]
-                children
-            )
-            |> Markdown.Html.withAttribute "src"
+        Markdown.Html.oneOf
+            [ Markdown.Html.tag "video"
+                (\src_ children -> video
+                    [ src src_, controls True ]
+                    children
+                )
+                |> Markdown.Html.withAttribute "src"
+            , Markdown.Html.tag "new-window"
+                (\src_ text_ children -> a
+                    [ href src_, target "_blank" ]
+                    [ text text_ ]
+                )
+                |> Markdown.Html.withAttribute "src"
+                |> Markdown.Html.withAttribute "text"
+            ]
     }

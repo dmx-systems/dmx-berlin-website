@@ -22,7 +22,7 @@ Visit the [Linqa website](https://linqa.eu) and blog.
 
 <video src="/linqa-video.mp4"></video>
 
-Download the [Linqa brochure (PDF)](/linqa-brochure.pdf).
+View the <new-window src="/linqa-brochure.pdf" text="Linqa brochure (PDF)"></new-window> (opens in new window).
 
 ### Try out
 
