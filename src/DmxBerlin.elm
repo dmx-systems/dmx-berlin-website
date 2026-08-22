@@ -55,7 +55,8 @@ view path model toMsg page =
 viewFront : View msg
 viewFront =
     { title = "The screen, redesigned for focus"
-    , body =
+    , nav = Nothing
+    , article =
         Just
             [ div []
                 [ div
@@ -65,12 +66,12 @@ viewFront =
                     [ id "subtitle" ]
                     [ text "The screen, redesigned for focus" ]
                 ]
-            , div [ id "profile" ]
+            , div
+                [ id "profile" ]
                 [ text "Jörg Richter", br [] []
                 , text "Software Developer, Berlin"
                 ]
             ]
-    , nav = Nothing
     }
 
 
@@ -103,7 +104,7 @@ viewMain : View msg -> Model -> List (Html msg)
 viewMain page model =
     let
         isBigScreen = not (isSmallScreen model)
-        isNavOnlyRoute = page.body == Nothing
+        isNavOnlyRoute = page.article == Nothing
         viewNav =
             case page.nav of
                 Just nav ->
@@ -113,18 +114,17 @@ viewMain page model =
                         []
                 Nothing ->
                     []
-        viewBody =
+        viewArticle =
             if not isNavOnlyRoute then
-                [ div
-                    [ id "body" ]
-                    (page.body
-                        |> Maybe.withDefault [ text "?" ] -- error (body missing)
+                [ Html.article []
+                    (page.article
+                        |> Maybe.withDefault [ text "❌ article missing" ]
                     )
                 ]
             else
                 []
     in
-    viewNav ++ viewBody
+    viewNav ++ viewArticle
 
 
 isSmallScreen : Model -> Bool
@@ -133,7 +133,7 @@ isSmallScreen model =
         Just width ->
             width < screenThreshold
         Nothing ->
-            False -- pre-render both, nav and body
+            False -- pre-render both, nav and article
 
 
 viewFooter : List (Html msg)

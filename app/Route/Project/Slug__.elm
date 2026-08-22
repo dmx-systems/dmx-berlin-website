@@ -93,11 +93,11 @@ view app shared model =
                     |> Maybe.map .name
                     |> Maybe.withDefault "?" -- error (lookup failed)
             Nothing -> "Projects"
-    , body =
-        app.data
-            |> Maybe.map viewMarkdown
     , nav =
         Just (Project.viewNav app.routeParams)
+    , article =
+        app.data
+            |> Maybe.map viewMarkdown
     }
 
 

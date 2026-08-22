@@ -57,7 +57,8 @@ view error model =
                 "Page Not Found"
             InternalError string ->
                 "Unexpected Error"
-    , body =
+    , nav = Nothing
+    , article =
         Just
             [ Html.div []
                 [ Html.p []
@@ -70,7 +71,6 @@ view error model =
                     ]
                 ]
             ]
-    , nav = Nothing
     }
 
 
