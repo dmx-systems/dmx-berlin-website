@@ -14,10 +14,12 @@ import Shared
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Markdown.Parser as Parser
-import Markdown.Renderer as Renderer
+import Markdown.Html
+import Markdown.Parser
+import Markdown.Renderer
 
-import Html exposing (Html, text)
+import Html exposing (Html, text, video)
+import Html.Attributes exposing (controls, src)
 
 
 
@@ -118,12 +120,29 @@ subscriptions routeParams path shared model =
     Sub.none
 
 
+-- Markdown
+
 viewMarkdown : String -> List (Html msg)
 viewMarkdown source =
-    case Parser.parse source of
+    case Markdown.Parser.parse source of
         Ok blocks ->
             blocks
-                |> Renderer.render Renderer.defaultHtmlRenderer
+                |> Markdown.Renderer.render renderer
                 |> Result.withDefault [ text "Markdown render error" ]
         Err _ ->
             [ text "Markdown parse error" ]
+
+
+renderer : Markdown.Renderer.Renderer (Html msg)
+renderer =
+    let
+        default = Markdown.Renderer.defaultHtmlRenderer
+    in
+    { default | html =
+        Markdown.Html.tag "video"
+            (\src_ children -> video
+                [ src src_, controls True ]
+                children
+            )
+            |> Markdown.Html.withAttribute "src"
+    }

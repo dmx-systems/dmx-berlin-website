@@ -102,7 +102,6 @@ update msg model =
             )
 
 
-
 subscriptions : UrlPath -> Model -> Sub Msg
 subscriptions _ _ =
     onResize DmxBerlin.WindowResized

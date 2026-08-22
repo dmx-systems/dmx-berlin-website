@@ -20,7 +20,7 @@ Find more detailed information in the [Linqa README](https://github.com/dmx-syst
 
 Visit the [Linqa website](https://linqa.eu) and blog.
 
-[▶ Watch the Linqa video](/linqa-video.mp4).
+<video src="/linqa-video.mp4"></video>
 
 Download the [Linqa brochure (PDF)](/linqa-brochure.pdf).
 
