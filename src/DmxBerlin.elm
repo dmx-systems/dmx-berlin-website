@@ -1,4 +1,4 @@
-module DmxBerlin exposing (Model, Msg(..), view, viewFront)
+module DmxBerlin exposing (Model, Msg(..), view, viewFront, viewAbout)
 
 import Project
 
@@ -7,7 +7,7 @@ import Route
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Html exposing (Html, a, br, div, text)
+import Html exposing (Html, a, br, div, h1, text)
 import Html.Attributes exposing (class, href, id)
 
 
@@ -52,29 +52,6 @@ view path model toMsg page =
     }
 
 
-viewFront : View msg
-viewFront =
-    { title = "The screen, redesigned for focus"
-    , nav = Nothing
-    , article =
-        Just
-            [ div []
-                [ div
-                    [ id "title" ]
-                    [ text "A Cognitive Home" ]
-                , div
-                    [ id "subtitle" ]
-                    [ text "The screen, redesigned for focus" ]
-                ]
-            , div
-                [ id "person" ]
-                [ div [] [ text "Jörg Richter" ]
-                , div [] [ text "Software Developer, Berlin" ]
-                ]
-            ]
-    }
-
-
 viewHeader : Model -> (Msg -> msg) -> List (Html msg)
 viewHeader model toMsg =
     let
@@ -84,18 +61,24 @@ viewHeader model toMsg =
             else
                 Just model.selectedProject
     in
-    [ div [ id "home" ]
+    [ div
+        [ id "home" ]
         [ Route.link
             []
             [ text "dmx.berlin" ]
             Route.Index
         ]
-    , div [ id "nav" ]
-        [ a [ href "https://forum.dmx.berlin" ] [ text "DMX Forum" ]
-        , Route.link
+    , div
+        [ id "nav" ]
+        [ Route.link
             []
             [ text "Projects" ]
             (Route.Project__Slug__ { slug = slug })
+        , a [ href "https://forum.dmx.berlin" ] [ text "DMX Forum" ]
+        , Route.link
+            []
+            [ text "About" ]
+            (Route.About)
         ]
     ]
 
@@ -147,3 +130,42 @@ viewFooter =
             [ Icon.mail |> Icon.toHtml [] ]
         ]
     ]
+
+
+-- Front page
+
+viewFront : View msg
+viewFront =
+    { title = "The screen, redesigned for focus"
+    , nav = Nothing
+    , article =
+        Just
+            [ div []
+                [ div
+                    [ id "title" ]
+                    [ text "A Cognitive Home" ]
+                , div
+                    [ id "subtitle" ]
+                    [ text "The screen, redesigned for focus" ]
+                ]
+            , div
+                [ id "person" ]
+                [ div [] [ text "Jörg Richter" ]
+                , div [] [ text "Software Developer, Berlin" ]
+                ]
+            ]
+    }
+
+
+-- About page
+
+viewAbout : View msg
+viewAbout =
+    { title = "About"
+    , nav = Nothing
+    , article =
+        Just
+            [ h1 [] [ text "About" ]
+            , div [] [ text "This website ..." ]
+            ]
+    }
