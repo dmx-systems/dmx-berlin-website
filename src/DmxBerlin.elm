@@ -12,7 +12,7 @@ import Html.Attributes exposing (class, href, id)
 
 
 
-screenThreshold = 640 -- width
+thresholdWidth = 640
 
 
 type alias Model =
@@ -67,9 +67,9 @@ viewFront =
                     [ text "The screen, redesigned for focus" ]
                 ]
             , div
-                [ id "profile" ]
-                [ text "Jörg Richter", br [] []
-                , text "Software Developer, Berlin"
+                [ id "person" ]
+                [ div [] [ text "Jörg Richter" ]
+                , div [] [ text "Software Developer, Berlin" ]
                 ]
             ]
     }
@@ -131,7 +131,7 @@ isSmallScreen : Model -> Bool
 isSmallScreen model =
     case model.windowWidth of
         Just width ->
-            width < screenThreshold
+            width < thresholdWidth
         Nothing ->
             False -- pre-render both, nav and article
 
