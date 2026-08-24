@@ -112,7 +112,7 @@ update :
 update app shared msg model =
     case msg of
         Project.Clicked slug ->
-            ( model, Effect.none, Just <| DmxBerlin.SelectProject slug )
+            ( model, Effect.none, Just <| DmxBerlin.ProjectSelected slug )
 
 
 subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg

@@ -1,4 +1,4 @@
-module DmxBerlin exposing (Model, Msg(..), view, viewFront, viewAbout)
+module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, viewAbout)
 
 import Project
 
@@ -7,23 +7,31 @@ import Route
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Html exposing (Html, a, br, div, h1, text)
+import Html exposing (Html, a, button, div, h1, li, menu, text)
 import Html.Attributes exposing (class, href, id)
+import Html.Events exposing (onClick)
 
 
 
+thresholdWidth : Width
 thresholdWidth = 640
 
 
 type alias Model =
-    { selectedProject : Project.Slug
-    , windowWidth : Maybe Int -- not available at pre-render time
+    { isMenuOpen : Bool
+    , selectedProject : Project.Slug
+    , windowWidth : Maybe Width -- not available at pre-render time
     }
 
 
 type Msg
-    = SelectProject Project.Slug
-    | WindowResized Int -- width
+    = MenuClicked
+    | ProjectSelected Project.Slug
+    | WindowResized Width
+
+
+type alias Width =
+    Int
 
 
 view :
@@ -79,8 +87,28 @@ viewHeader model toMsg =
             []
             [ text "About" ]
             (Route.About)
+        , button
+            [ onClick <| toMsg MenuClicked ]
+            [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"
+                |> Icon.toHtml []
+            ]
         ]
     ]
+    ++ viewMenu model
+
+
+viewMenu : Model -> List (Html msg)
+viewMenu model =
+    if model.isMenuOpen then
+        [ menu
+            []
+            [ li [] [ text "Item 1" ]
+            , li [] [ text "Item 2" ]
+            , li [] [ text "Item 3" ]
+            ]
+        ]
+    else
+        []
 
 
 viewMain : View msg -> Model -> List (Html msg)

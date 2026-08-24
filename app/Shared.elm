@@ -21,7 +21,7 @@ import Json.Decode as D
 -- PORTS
 
 
-port onResize : (Int -> msg) -> Sub msg
+port onResize : (DmxBerlin.Width -> msg) -> Sub msg
 
 
 
@@ -64,14 +64,15 @@ type alias PagePath =
 
 init : Flags -> Maybe PagePath -> ( Model, Effect Msg )
 init flags maybePagePath =
-    (   { windowWidth = initWindowWidth flags
-        , selectedProject = initProject maybePagePath
-        }
+    ( { isMenuOpen = False
+      , selectedProject = initProject maybePagePath
+      , windowWidth = initWindowWidth flags
+      }
     , Effect.none
     )
 
 
-initWindowWidth : Flags -> Maybe Int
+initWindowWidth : Flags -> Maybe DmxBerlin.Width
 initWindowWidth flags =
     case flags of
         BrowserFlags value ->
@@ -92,7 +93,11 @@ initProject maybePagePath =
 update : Msg -> Model -> ( Model, Effect Msg )
 update msg model =
     case msg of
-        DmxBerlin.SelectProject slug ->
+        DmxBerlin.MenuClicked ->
+            ( { model | isMenuOpen = not model.isMenuOpen }
+            , Effect.none
+            )
+        DmxBerlin.ProjectSelected slug ->
             ( { model | selectedProject = slug }
             , Effect.none
             )

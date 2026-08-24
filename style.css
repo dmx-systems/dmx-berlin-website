@@ -41,6 +41,24 @@ header a {
   text-decoration: none;
 }
 
+header button {
+  font-size: var(--font-size);
+  line-height: 1em;
+}
+
+header menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  list-style-type: none;
+  padding: 0.5em 1em;
+  position: absolute;
+  top: 0.8em;
+  right: var(--padding-horiz);;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
 /* Main */
 
 main {
