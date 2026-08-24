@@ -21,6 +21,7 @@ import Json.Decode as D
 -- PORTS
 
 
+port onPointerdown : (() -> msg) -> Sub msg
 port onResize : (DmxBerlin.Width -> msg) -> Sub msg
 
 
@@ -105,11 +106,18 @@ update msg model =
             ( { model | windowWidth = Just width }
             , Effect.none
             )
+        DmxBerlin.CancelUI ->
+            ( { model | isMenuOpen = False }
+            , Effect.none
+            )
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
 subscriptions _ _ =
-    onResize DmxBerlin.WindowResized
+    Sub.batch
+        [ onResize DmxBerlin.WindowResized
+        , onPointerdown (\() -> DmxBerlin.CancelUI)
+        ]
 
 
 data : BackendTask FatalError Data

@@ -28,6 +28,7 @@ type Msg
     = MenuClicked
     | ProjectSelected Project.Slug
     | WindowResized Width
+    | CancelUI
 
 
 type alias Width =
@@ -86,7 +87,7 @@ viewHeader model toMsg =
         , Route.link
             []
             [ text "About" ]
-            (Route.About)
+            Route.About
         , button
             [ onClick <| toMsg MenuClicked ]
             [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"

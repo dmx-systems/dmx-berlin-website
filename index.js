@@ -5,6 +5,9 @@ export default {
         window.addEventListener('resize',
             () => app.ports.onResize.send(window.innerWidth)
         )
+        window.addEventListener('pointerdown',
+            () => app.ports.onPointerdown.send(null)
+        )
     },
     flags: function () {
         console.log("[dmx-berlin-website] Window width", window.innerWidth)
