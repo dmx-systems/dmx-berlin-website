@@ -118,7 +118,7 @@ subscriptions : UrlPath -> Model -> Sub Msg
 subscriptions _ _ =
     Sub.batch
         [ onResize DmxBerlin.WindowResized
-        , onPointerdown (\() -> DmxBerlin.CancelUI)
+        , onPointerdown (always DmxBerlin.CancelUI)
         ]
 
 

@@ -9,7 +9,7 @@ import UrlPath exposing (UrlPath)
 import View exposing (View)
 
 import Html exposing (Attribute, Html, a, button, div, h1, li, nav, text)
-import Html.Attributes exposing (class, href, id)
+import Html.Attributes as Attributes exposing (class, href, id)
 import Html.Events exposing (onClick, stopPropagationOn)
 import Json.Decode as D
 
@@ -34,24 +34,34 @@ type Msg
     | NoOp
 
 
-type Link
-    = External String String -- text, href
-    | Internal String (Model -> Route) -- text, route
+type alias Link =
+    { text : String
+    , target : LinkTarget
+    , displayOnSmallScreen : Bool
+    }
+
+
+type LinkTarget
+    = External String -- href
+    | Internal (Model -> Route)
 
 
 links : List Link
 links =
-    [ Internal "Projects"
-        (\model -> Route.Project__Slug__
-            { slug =
-                if isSmallScreen model then
-                    Nothing
-                else
-                    Just model.selectedProject
-            }
+    [ Link "Projects"
+        (Internal
+            (\model -> Route.Project__Slug__
+                { slug =
+                    if isSmallScreen model then
+                        Nothing
+                    else
+                        Just model.selectedProject
+                }
+            )
         )
-    , External "DMX Forum" "https://forum.dmx.berlin"
-    , Internal "About" (\_ -> Route.About)
+        True
+    , Link "DMX Forum" (External "https://forum.dmx.berlin") False
+    , Link "About" (Internal (always Route.About)) False
     ]
 
 
@@ -90,11 +100,10 @@ view path model toMsg page =
 viewHeader : Model -> (Msg -> msg) -> List (Html msg)
 viewHeader model toMsg =
     let
-        slug =
-            if isSmallScreen model then
-                Nothing
-            else
-                Just model.selectedProject
+        navLinkFilter : Bool -> Bool
+        navLinkFilter displayOnSmallScreen =
+            not (isSmallScreen model) || displayOnSmallScreen
+
     in
     [ Route.link
         []
@@ -102,7 +111,7 @@ viewHeader model toMsg =
         Route.Index
     , nav
         []
-        ( viewNavLinks model []
+        ( viewNavLinks navLinkFilter [] model
             ++ viewSiteMenu model toMsg
         )
     ]
@@ -110,19 +119,22 @@ viewHeader model toMsg =
 
 viewSiteMenu : Model -> (Msg -> msg) -> List (Html msg)
 viewSiteMenu model toMsg =
-    [ div
-        [ id "site-menu"
-        , onPointerDownStop <| toMsg NoOp
-        ]
-        (   [ button
-                [ onClick <| toMsg MenuClicked ]
-                [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"
-                    |> Icon.toHtml []
-                ]
+    if isSmallScreen model then
+        [ div
+            [ id "site-menu"
+            , onPointerDownStop <| toMsg NoOp
             ]
-            ++ viewMenu model toMsg
-        )
-    ]
+            (   [ button
+                    [ onClick <| toMsg MenuClicked ]
+                    [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"
+                        |> Icon.toHtml []
+                    ]
+                ]
+                ++ viewMenu model toMsg
+            )
+        ]
+    else
+        []
 
 
 viewMenu : Model -> (Msg -> msg) -> List (Html msg)
@@ -133,22 +145,30 @@ viewMenu model toMsg =
     if model.isMenuOpen then
         [ nav
             []
-            (viewNavLinks model attrs)
+            (viewNavLinks (always True) attrs model)
         ]
     else
         []
 
 
-viewNavLinks : Model -> List (Attribute msg) -> List (Html msg)
-viewNavLinks model attrs =
+viewNavLinks : (Bool -> Bool) -> List (Attribute msg) -> Model -> List (Html msg)
+viewNavLinks displayFilter attrs model =
     links
-        |> List.map
-            (\link ->
-                case link of
-                    External text_ href_ ->
-                        a ([ href href_] ++ attrs) [ text text_ ]
-                    Internal text_ toRoute ->
-                        Route.link attrs [ text text_ ] (toRoute model)
+        |> List.filterMap
+            (\{ text, target, displayOnSmallScreen } ->
+                if displayFilter displayOnSmallScreen then
+                    Just <|
+                        case target of
+                            External href ->
+                                Html.a
+                                    (Attributes.href href :: attrs)
+                                    [ Html.text text ]
+                            Internal toRoute ->
+                                Route.link attrs
+                                    [ Html.text text ]
+                                    (toRoute model)
+                else
+                    Nothing
             )
 
 

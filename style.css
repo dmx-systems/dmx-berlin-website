@@ -55,7 +55,7 @@ header #site-menu nav {
   list-style-type: none;
   padding: 0.5em 1em;
   position: absolute;
-  top: 1.8em;
+  top: 0;
   right: var(--padding-horiz);;
   background-color: white;
   border: 1px solid lightgray;
