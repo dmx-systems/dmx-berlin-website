@@ -3,13 +3,15 @@ module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, viewAbout)
 import Project
 
 import FeatherIcons as Icon
-import Route
+
+import Route exposing (Route)
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Html exposing (Html, a, button, div, h1, li, menu, text)
+import Html exposing (Attribute, Html, a, button, div, h1, li, nav, text)
 import Html.Attributes exposing (class, href, id)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, stopPropagationOn)
+import Json.Decode as D
 
 
 
@@ -29,6 +31,28 @@ type Msg
     | ProjectSelected Project.Slug
     | WindowResized Width
     | CancelUI
+    | NoOp
+
+
+type Link
+    = External String String -- text, href
+    | Internal String (Model -> Route) -- text, route
+
+
+links : List Link
+links =
+    [ Internal "Projects"
+        (\model -> Route.Project__Slug__
+            { slug =
+                if isSmallScreen model then
+                    Nothing
+                else
+                    Just model.selectedProject
+            }
+        )
+    , External "DMX Forum" "https://forum.dmx.berlin"
+    , Internal "About" (\_ -> Route.About)
+    ]
 
 
 type alias Width =
@@ -61,6 +85,8 @@ view path model toMsg page =
     }
 
 
+-- Header
+
 viewHeader : Model -> (Msg -> msg) -> List (Html msg)
 viewHeader model toMsg =
     let
@@ -70,47 +96,63 @@ viewHeader model toMsg =
             else
                 Just model.selectedProject
     in
-    [ div
-        [ id "home" ]
-        [ Route.link
-            []
-            [ text "dmx.berlin" ]
-            Route.Index
-        ]
-    , div
-        [ id "nav" ]
-        [ Route.link
-            []
-            [ text "Projects" ]
-            (Route.Project__Slug__ { slug = slug })
-        , a [ href "https://forum.dmx.berlin" ] [ text "DMX Forum" ]
-        , Route.link
-            []
-            [ text "About" ]
-            Route.About
-        , button
-            [ onClick <| toMsg MenuClicked ]
-            [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"
-                |> Icon.toHtml []
-            ]
-        ]
+    [ Route.link
+        []
+        [ text "dmx.berlin" ]
+        Route.Index
+    , nav
+        []
+        ( viewNavLinks model []
+            ++ viewSiteMenu model toMsg
+        )
     ]
-    ++ viewMenu model
 
 
-viewMenu : Model -> List (Html msg)
-viewMenu model =
-    if model.isMenuOpen then
-        [ menu
-            []
-            [ li [] [ text "Item 1" ]
-            , li [] [ text "Item 2" ]
-            , li [] [ text "Item 3" ]
+viewSiteMenu : Model -> (Msg -> msg) -> List (Html msg)
+viewSiteMenu model toMsg =
+    [ div
+        [ id "site-menu"
+        , onPointerDownStop <| toMsg NoOp
+        ]
+        (   [ button
+                [ onClick <| toMsg MenuClicked ]
+                [ Icon.menu |> Icon.withSize 1 |> Icon.withSizeUnit "em"
+                    |> Icon.toHtml []
+                ]
             ]
+            ++ viewMenu model toMsg
+        )
+    ]
+
+
+viewMenu : Model -> (Msg -> msg) -> List (Html msg)
+viewMenu model toMsg =
+    let
+        attrs = [ onClick <| toMsg CancelUI ]
+    in
+    if model.isMenuOpen then
+        [ nav
+            []
+            (viewNavLinks model attrs)
         ]
     else
         []
 
+
+viewNavLinks : Model -> List (Attribute msg) -> List (Html msg)
+viewNavLinks model attrs =
+    links
+        |> List.map
+            (\link ->
+                case link of
+                    External text_ href_ ->
+                        a ([ href href_] ++ attrs) [ text text_ ]
+                    Internal text_ toRoute ->
+                        Route.link attrs [ text text_ ] (toRoute model)
+            )
+
+
+-- Main
 
 viewMain : View msg -> Model -> List (Html msg)
 viewMain page model =
@@ -139,14 +181,7 @@ viewMain page model =
     viewNav ++ viewArticle
 
 
-isSmallScreen : Model -> Bool
-isSmallScreen model =
-    case model.windowWidth of
-        Just width ->
-            width < thresholdWidth
-        Nothing ->
-            False -- pre-render both, nav and article
-
+-- Footer
 
 viewFooter : List (Html msg)
 viewFooter =
@@ -198,3 +233,26 @@ viewAbout =
             , div [] [ text "This website ..." ]
             ]
     }
+
+
+-- Screen
+
+isSmallScreen : Model -> Bool
+isSmallScreen model =
+    case model.windowWidth of
+        Just width ->
+            width < thresholdWidth
+        Nothing ->
+            False -- pre-render both, nav and article
+
+
+-- Events
+
+onPointerDownStop : msg -> Attribute msg
+onPointerDownStop msg =
+  stopPropagation "pointerdown" msg
+
+
+stopPropagation : String -> msg -> Attribute msg
+stopPropagation eventName msg =
+  stopPropagationOn eventName <| D.succeed (msg, True) -- stopPropagation=True

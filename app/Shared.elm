@@ -110,6 +110,8 @@ update msg model =
             ( { model | isMenuOpen = False }
             , Effect.none
             )
+        DmxBerlin.NoOp ->
+            ( model, Effect.none )
 
 
 subscriptions : UrlPath -> Model -> Sub Msg
