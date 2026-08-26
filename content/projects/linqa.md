@@ -1,14 +1,14 @@
 Linqa
 =====
 
-Breaking Language Barriers in Collaboration
+Breaking language barriers
 
 Linqa is a multilingual whiteboard for supporting international collaboration.  Users place content items (notes, text blocks, PDF, images, audio, video, documents) on a shared whiteboard and discuss them in a chat-like manner.
 All content and discussion is translated automatically. Translations can be revised manually.
 
 A particular Linqa installation uses 2 languages out of a set of 9: German 🇩🇪, English 🇬🇧, Spanish 🇪🇸, Finnish 🇫🇮, French 🇫🇷, Polish 🇵🇱, Portuguese (Brazilian) 🇧🇷, Swedish 🇸🇪, and Ukrainian 🇺🇦.
 
-![Linqa screenshot](/linqa.png)
+![Linqa screenshot](/linqa/linqa.png)
 
 Linqa has 3 access levels: *Administrators* create whiteboards and assign users, *Editors* create content and arrange the whiteboard, and normal *Users* browse content and discuss.
 
@@ -20,9 +20,9 @@ Find more detailed information in the [Linqa README](https://github.com/dmx-syst
 
 Visit the [Linqa website](https://linqa.eu) and blog.
 
-<video src="/linqa-video.mp4"></video>
+<video src="/linqa/linqa-video.mp4"></video>
 
-View the <new-window src="/linqa-brochure.pdf" text="Linqa brochure (PDF)"></new-window> (opens in new window).
+View the <new-window src="/linqa/linqa-brochure.pdf" text="Linqa brochure (PDF)"></new-window> (opens in new window).
 
 ### Try out
 
