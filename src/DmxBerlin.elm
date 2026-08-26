@@ -73,31 +73,18 @@ view :
     UrlPath -> Model -> (Msg -> msg) -> View msg
     -> { title : String, body : List (Html msg) }
 view path model toMsg page =
-    let
-        mainId =
-            case path of
-                segment :: _ -> segment
-                [] -> "front"
-        mainClass =
-            if isSmallScreen model then
-                [ class "small-screen" ]
-            else
-                []
-    in
     { title = "dmx.berlin - " ++ page.title
     , body =
-        [ Html.header [] (viewHeader model toMsg)
-        , Html.main_
-            ([ id mainId ] ++ mainClass)
-            (viewMain page model)
-        , Html.footer [] viewFooter
+        [ viewHeader model toMsg
+        , viewMain path page model
+        , viewFooter
         ]
     }
 
 
 -- Header
 
-viewHeader : Model -> (Msg -> msg) -> List (Html msg)
+viewHeader : Model -> (Msg -> msg) -> Html msg
 viewHeader model toMsg =
     let
         navLinkFilter : Bool -> Bool
@@ -105,16 +92,17 @@ viewHeader model toMsg =
             not (isSmallScreen model) || displayOnSmallScreen
 
     in
-    [ Route.link
-        []
-        [ text "dmx.berlin" ]
-        Route.Index
-    , nav
-        []
-        ( viewNavLinks navLinkFilter [] model
-            ++ viewSiteMenu model toMsg
-        )
-    ]
+    Html.header []
+        [ Route.link
+            []
+            [ text "dmx.berlin" ]
+            Route.Index
+        , nav
+            []
+            ( viewNavLinks navLinkFilter [] model
+                ++ viewSiteMenu model toMsg
+            )
+        ]
 
 
 viewSiteMenu : Model -> (Msg -> msg) -> List (Html msg)
@@ -174,9 +162,18 @@ viewNavLinks displayFilter attrs model =
 
 -- Main
 
-viewMain : View msg -> Model -> List (Html msg)
-viewMain page model =
+viewMain : UrlPath -> View msg -> Model -> Html msg
+viewMain path page model =
     let
+        mainId =
+            case path of
+                segment :: _ -> segment
+                [] -> "front"
+        mainClass =
+            if isSmallScreen model then
+                [ class "small-screen" ]
+            else
+                []
         isBigScreen = not (isSmallScreen model)
         isNavOnlyRoute = page.article == Nothing
         viewNav =
@@ -198,22 +195,26 @@ viewMain page model =
             else
                 []
     in
-    viewNav ++ viewArticle
+    Html.main_
+        ([ id mainId ] ++ mainClass)
+        (viewNav ++ viewArticle)
 
 
 -- Footer
 
-viewFooter : List (Html msg)
+viewFooter : Html msg
 viewFooter =
-    [ div [ id "icons" ]
-        [ a [ href "https://github.com/jri" ]
-            [ Icon.github |> Icon.toHtml [] ]
-        , a [ href "https://www.linkedin.com/in/jörg-richter-0a829123b/" ]
-            [ Icon.linkedin |> Icon.toHtml [] ]
-        , a [ href "mailto:jri@dmx.berlin" ]
-            [ Icon.mail |> Icon.toHtml [] ]
+    Html.footer []
+        [ div
+            [ id "icons" ]
+            [ a [ href "https://github.com/jri" ]
+                [ Icon.github |> Icon.toHtml [] ]
+            , a [ href "https://www.linkedin.com/in/jörg-richter-0a829123b/" ]
+                [ Icon.linkedin |> Icon.toHtml [] ]
+            , a [ href "mailto:jri@dmx.berlin" ]
+                [ Icon.mail |> Icon.toHtml [] ]
+            ]
         ]
-    ]
 
 
 -- Front page
@@ -224,16 +225,17 @@ viewFront =
     , nav = Nothing
     , article =
         Just
-            [ div []
+            [ div
+                [ class "title" ]
                 [ div
-                    [ id "title" ]
+                    [ class "main" ]
                     [ text "A Cognitive Home" ]
                 , div
-                    [ id "subtitle" ]
+                    [ class "sub" ]
                     [ text "The screen, redesigned for focus" ]
                 ]
             , div
-                [ id "person" ]
+                [ class "person" ]
                 [ div [] [ text "Jörg Richter" ]
                 , div [] [ text "Software Developer, Berlin" ]
                 ]

@@ -83,6 +83,7 @@ main.small-screen nav {
 main article {
   flex-grow: 1;
   overflow: auto;
+  line-height: 1.6;
   padding: 0 var(--padding-horiz);
 }
 
@@ -121,23 +122,27 @@ main#front article {
   text-align: center;
 }
 
-main#front #title {
+main#front .title {
+  line-height: 1.3;
+}
+
+main#front .title .main {
   font-size: 48px;
 }
 
-main#front.small-screen #title {
+main#front.small-screen .title .main {
   font-size: 42px;
 }
 
-main#front #subtitle {
+main#front .title .sub {
   font-size: 24px;
 }
 
-main#front.small-screen #subtitle {
+main#front.small-screen .title .sub {
   font-size: 22px;
 }
 
-main#front #person {
+main#front .person {
   font-size: 1.15em;
   line-height: 1.4;
 }
@@ -163,10 +168,6 @@ main#project nav .selected a {
 main#project nav .tagline {
   font-size: var(--font-size-small);
   color: gray;
-}
-
-main#project article {
-  line-height: 1.6;
 }
 
 main#project img,
