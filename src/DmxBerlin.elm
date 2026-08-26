@@ -1,4 +1,4 @@
-module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, viewAbout)
+module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront)
 
 import Project
 
@@ -237,20 +237,6 @@ viewFront =
                 [ div [] [ text "Jörg Richter" ]
                 , div [] [ text "Software Developer, Berlin" ]
                 ]
-            ]
-    }
-
-
--- About page
-
-viewAbout : View msg
-viewAbout =
-    { title = "About"
-    , nav = Nothing
-    , article =
-        Just
-            [ h1 [] [ text "About" ]
-            , div [] [ text "This website ..." ]
             ]
     }
 

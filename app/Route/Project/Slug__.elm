@@ -1,6 +1,7 @@
 module Route.Project.Slug__ exposing (ActionData, Data, Model, Msg, route)
 
 import DmxBerlin
+import Markdown exposing (Markdown)
 import Project exposing (RouteParams)
 
 import BackendTask exposing (BackendTask)
@@ -14,13 +15,6 @@ import Shared
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Markdown.Html
-import Markdown.Parser
-import Markdown.Renderer
-
-import Html exposing (Html, a, text, video)
-import Html.Attributes exposing (controls, href, src, target)
-
 
 
 type alias Model =
@@ -33,10 +27,6 @@ type alias Msg =
 
 type alias Data =
     Maybe Markdown
-
-
-type alias Markdown =
-    String
 
 
 type alias ActionData =
@@ -97,7 +87,7 @@ view app shared model =
         Just (Project.viewNav app.routeParams)
     , article =
         app.data
-            |> Maybe.map viewMarkdown
+            |> Maybe.map Markdown.view
     }
 
 
@@ -118,40 +108,3 @@ update app shared msg model =
 subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg
 subscriptions routeParams path shared model =
     Sub.none
-
-
--- Markdown
-
-viewMarkdown : String -> List (Html msg)
-viewMarkdown source =
-    case Markdown.Parser.parse source of
-        Ok blocks ->
-            blocks
-                |> Markdown.Renderer.render renderer
-                |> Result.withDefault [ text "Markdown render error" ]
-        Err _ ->
-            [ text "Markdown parse error" ]
-
-
-renderer : Markdown.Renderer.Renderer (Html msg)
-renderer =
-    let
-        default = Markdown.Renderer.defaultHtmlRenderer
-    in
-    { default | html =
-        Markdown.Html.oneOf
-            [ Markdown.Html.tag "video"
-                (\src_ children -> video
-                    [ src src_, controls True ]
-                    children
-                )
-                |> Markdown.Html.withAttribute "src"
-            , Markdown.Html.tag "new-window"
-                (\src_ text_ children -> a
-                    [ href src_, target "_blank" ]
-                    [ text text_ ]
-                )
-                |> Markdown.Html.withAttribute "src"
-                |> Markdown.Html.withAttribute "text"
-            ]
-    }

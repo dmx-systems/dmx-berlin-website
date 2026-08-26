@@ -1,13 +1,17 @@
 module Route.About exposing (ActionData, Data, Model, Msg, route)
 
 import DmxBerlin
+import Markdown exposing (Markdown)
 
 import BackendTask exposing (BackendTask)
+import BackendTask.File as File
 import FatalError exposing (FatalError)
 import Head
 import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import View exposing (View)
+
+import Html
 
 
 
@@ -24,7 +28,7 @@ type alias RouteParams =
 
 
 type alias Data =
-    ()
+    Markdown
 
 
 type alias ActionData =
@@ -42,7 +46,8 @@ route =
 
 data : BackendTask FatalError Data
 data =
-    BackendTask.succeed ()
+    File.rawFile ("content/about.md")
+        |> BackendTask.allowFatal
 
 
 head : App Data ActionData RouteParams -> List Head.Tag
@@ -52,4 +57,7 @@ head app =
 
 view : App Data ActionData RouteParams -> Shared.Model -> View msg
 view app sharedModel =
-    DmxBerlin.viewAbout
+    { title = "About"
+    , nav = [ Html.div [] [] ] |> Just
+    , article = app.data |> Markdown.view |> Just
+    }
