@@ -53,8 +53,7 @@ imageTag =
                             case float of
                                 "left" ->
                                     [ Attributes.style "float" float
-                                    , Attributes.style "margin-right" "2em"
-                                    , Attributes.style "margin-bottom" "1em"
+                                    , Attributes.style "margin" "0.5em 2em 1em 0"
                                     ]
                                 _ -> [] -- TODO
                         Nothing -> []

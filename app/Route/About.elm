@@ -58,6 +58,6 @@ head app =
 view : App Data ActionData RouteParams -> Shared.Model -> View msg
 view app sharedModel =
     { title = "About"
-    , nav = [ Html.div [] [] ] |> Just
+    , nav = [ Html.text "" ] |> Just
     , article = app.data |> Markdown.view |> Just
     }
