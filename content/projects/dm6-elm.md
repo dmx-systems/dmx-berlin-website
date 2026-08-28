@@ -1,11 +1,12 @@
 DM6 Elm
 =======
 
-An user interface to support focus.
+### Do you want a pushing bureaucrat, or a bicycle for your mind?
 
-For knowledge workers of all kinds, in particular ADHD people.
+DM6 Elm is a cognitive work environment, built to support focus.
+Beneficial for all kinds of knowledge workers, in particular ADHD people.
 
-DM6 Elm is the 6th version of the 25+ years running Open Source project "DeepaMehta", rewritten in Elm (see also the [DMX Platform](/project/dmx-platform) project).
+DM6 Elm is the 6th version of the 25+ years running Open Source project "DeepaMehta", rewritten in Elm (see also the [DMX Platform](/project/dmx-platform) project). Learn more about its history on the [About](/about) page.
 
 ![DM6 Elm screenshot](/dm6-elm.png)
 
