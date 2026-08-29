@@ -1,8 +1,6 @@
 DM6 Elm
 =======
 
-### Do you want a pushing bureaucrat, or a bicycle for your mind?
-
 DM6 Elm is a cognitive work environment, built to support focus.
 Beneficial for all kinds of knowledge workers, in particular ADHD people.
 
