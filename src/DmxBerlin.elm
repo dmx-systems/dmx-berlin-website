@@ -46,8 +46,8 @@ type LinkTarget
     | Internal (Model -> Route)
 
 
-links : List Link
-links =
+navLinks : List Link
+navLinks =
     [ Link "Projects"
         (Internal
             (\model -> Route.Project__Slug__
@@ -60,6 +60,7 @@ links =
             )
         )
         True
+    , Link "Publications" (Internal (always Route.Publications)) False
     , Link "DMX Forum" (External "https://forum.dmx.berlin") False
     , Link "About" (Internal (always Route.About)) False
     ]
@@ -141,7 +142,7 @@ viewMenu model toMsg =
 
 viewNavLinks : (Bool -> Bool) -> List (Attribute msg) -> Model -> List (Html msg)
 viewNavLinks displayFilter attrs model =
-    links
+    navLinks
         |> List.filterMap
             (\{ text, target, displayOnSmallScreen } ->
                 if displayFilter displayOnSmallScreen then
