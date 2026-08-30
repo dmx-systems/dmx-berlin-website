@@ -5,7 +5,8 @@
     "dev": "elm-pages dev",
     "debug": "elm-pages dev --debug",
     "build": "elm-pages build",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "review": "elm-review"
   },
   "devDependencies": {
     "elm": "^0.19.1-6",

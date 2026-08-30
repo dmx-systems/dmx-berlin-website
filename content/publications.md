@@ -12,7 +12,7 @@ Academic articles (peer-reviewed)
 >
   In Jörg Rech, Björn Decker, Eric Ras (eds.): Emerging Technologies for Semantic Work Environments: Techniques, Methods, and Applications. (Issued by Fraunhofer Institute for Experimental Software Engineering, IESE).
 
-  Published by [IGI Global, ISBN13: 9781599048772](https://www.igi-global.com/book/emerging-technologies-semantic-work-environments/337), June, 2008.
+  Published by [IGI Global](https://www.igi-global.com/book/emerging-technologies-semantic-work-environments/337), June, 2008.
 </publication>
 
 <publication
@@ -26,5 +26,5 @@ Academic articles (peer-reviewed)
 
   Proceedings of Semantic Desktop Workshop at the 4th International Semantic Web Conference (ISWC 2005), Galway, Ireland, November 6, 2005.
 
-  Published by [CEUR Workshop Proceedings, ISSN 1613-0073, Volume 175](https://ceur-ws.org/Vol-175/).
+  Published by [CEUR Workshop Proceedings, Volume 175](https://ceur-ws.org/Vol-175/).
 </publication>

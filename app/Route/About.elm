@@ -1,6 +1,5 @@
 module Route.About exposing (ActionData, Data, Model, Msg, route)
 
-import DmxBerlin
 import Markdown exposing (Markdown)
 
 import BackendTask exposing (BackendTask)
@@ -59,5 +58,8 @@ view : App Data ActionData RouteParams -> Shared.Model -> View msg
 view app sharedModel =
     { title = "About"
     , nav = [ Html.text "" ] |> Just
-    , article = app.data |> Markdown.view |> Just
+    , article =
+        app.data
+            |> Markdown.view sharedModel
+            |> Just
     }

@@ -1,5 +1,7 @@
 module Markdown exposing (Markdown, view)
 
+import DmxBerlin
+
 import Markdown.Html
 import Markdown.Parser
 import Markdown.Renderer
@@ -13,67 +15,39 @@ type alias Markdown =
     String
 
 
-view : String -> List (Html msg)
-view source =
+view : DmxBerlin.Model -> Markdown -> List (Html msg)
+view model source =
     case Markdown.Parser.parse source of
         Ok blocks ->
             blocks
-                |> Markdown.Renderer.render customRenderer
+                |> Markdown.Renderer.render (customRenderer model)
                 |> Result.withDefault [ Html.text "❌ Markdown render error" ]
         Err _ ->
             [ Html.text "❌ Markdown parse error" ]
 
 
-customRenderer : Markdown.Renderer.Renderer (Html msg)
-customRenderer =
+customRenderer : DmxBerlin.Model -> Markdown.Renderer.Renderer (Html msg)
+customRenderer model =
     let
         default = Markdown.Renderer.defaultHtmlRenderer
     in
     { default | html =
         Markdown.Html.oneOf
-            [ publicationTag
-            , imageTag
+            [ publicationTag model
+            , imageTag model
             , videoTag
             , newWindowTag
             ]
     }
 
 
-publicationTag : Markdown.Html.Renderer (List (Html msg) -> Html msg)
-publicationTag =
+publicationTag : DmxBerlin.Model -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
+publicationTag model =
     Markdown.Html.tag "publication"
-        (\authors title coverUrl pdfUrl pageCount children ->
-            Html.div
-                [ class "publication"
-                , style "display" "flex"
-                , style "gap" "4em"
-                ]
-                [ div []
-                    [ viewImg coverUrl (Just "180px") Nothing [] ]
-                , div []
-                    (   [ div [] [ text authors ]
-                        , div
-                            [ style "font-size" "1.3em"
-                            , style "font-weight" "bold"
-                            ]
-                            [ text title ]
-                        ]
-                        ++ children
-                        ++
-                        [ div
-                            [ style "display" "flex"
-                            , style "align-items" "center"
-                            , style "gap" "0.7em"
-                            , style "line-height" "1"
-                            ]
-                            [ Html.a
-                                [ Attributes.href pdfUrl ]
-                                [ viewImg "/publications/pdf.gif" Nothing Nothing [] ]
-                            , text <| "Full article (PDF, " ++ pageCount ++ " pages)"
-                            ]
-                        ]
-                    )
-                ]
+        (if DmxBerlin.isSmallScreen model then
+            viewPublicationSmall model
+        else
+            viewPublication model
         )
         |> Markdown.Html.withAttribute "authors"
         |> Markdown.Html.withAttribute "title"
@@ -82,18 +56,80 @@ publicationTag =
         |> Markdown.Html.withAttribute "page-count"
 
 
-imageTag : Markdown.Html.Renderer (List (Html msg) -> Html msg)
-imageTag =
+viewPublication : DmxBerlin.Model -> String -> String -> String -> String -> String -> List (Html msg) -> Html msg
+viewPublication model authors title coverUrl pdfUrl pageCount children =
+    Html.div
+        [ class "publication"
+        , style "display" "flex"
+        , style "gap" "4em"
+        ]
+        [ div []
+            [ viewImg model coverUrl (Just "180px") Nothing [] ]
+        , div []
+            (   viewAuthorAndTitle authors title
+                ++ children
+                ++ [ viewPdfDownload pdfUrl pageCount ]
+            )
+        ]
+
+
+viewPublicationSmall : DmxBerlin.Model -> String -> String -> String -> String -> String -> List (Html msg) -> Html msg
+viewPublicationSmall model authors title coverUrl pdfUrl pageCount children =
+    Html.div
+        [ class "publication" ]
+        (   viewAuthorAndTitle authors title
+            ++ [ viewImg model coverUrl (Just "140px") (Just "left") [] ]
+            ++ children
+            ++ [ viewPdfDownload pdfUrl pageCount ]
+        )
+
+
+viewAuthorAndTitle : String -> String -> List (Html msg)
+viewAuthorAndTitle authors title =
+    [ div
+        []
+        [ text authors ]
+    , div
+        [ style "font-size" "1.3em"
+        , style "font-weight" "bold"
+        , style "margin-bottom" "1rem"
+        ]
+        [ text title ]
+    ]
+
+
+viewPdfDownload : String -> String -> Html msg
+viewPdfDownload pdfUrl pageCount =
+    div
+        [ style "display" "flex"
+        , style "align-items" "center"
+        , style "gap" "0.7em"
+        , style "line-height" "1"
+        ]
+        [ Html.a
+            [ Attributes.href pdfUrl ]
+            [ Html.img
+                [ Attributes.src "/publications/pdf.gif" ]
+                []
+            ]
+        , Html.text <| "Full article (PDF, " ++ pageCount ++ " pages)"
+        ]
+
+
+imageTag : DmxBerlin.Model -> Markdown.Html.Renderer (List (Html msg) -> Html msg)
+imageTag model =
     Markdown.Html.tag "image"
-        viewImg
+        (viewImg model)
         |> Markdown.Html.withAttribute "src"
         |> Markdown.Html.withOptionalAttribute "width"
         |> Markdown.Html.withOptionalAttribute "float"
 
 
-viewImg : String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
-viewImg src maybeWidth maybeFloat children =
+viewImg : DmxBerlin.Model -> String -> Maybe String -> Maybe String -> List (Html msg) -> Html msg
+viewImg model src maybeWidth maybeFloat children =
     let
+        marginRight =
+            if DmxBerlin.isSmallScreen model then "1em" else "2em"
         styleWidth =
             case maybeWidth of
                 Just width -> [ Attributes.style "width" width ]
@@ -104,7 +140,7 @@ viewImg src maybeWidth maybeFloat children =
                     case float of
                         "left" ->
                             [ Attributes.style "float" float
-                            , Attributes.style "margin" "0.5em 2em 1em 0"
+                            , Attributes.style "margin" <| "0.5em " ++ marginRight ++ " 1em 0"
                             ]
                         _ -> [] -- TODO
                 Nothing -> []

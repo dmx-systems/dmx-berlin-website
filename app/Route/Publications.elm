@@ -11,8 +11,6 @@ import RouteBuilder exposing (App, StatelessRoute)
 import Shared
 import View exposing (View)
 
-import Html
-
 
 
 type alias Model =
@@ -59,5 +57,8 @@ view : App Data ActionData RouteParams -> Shared.Model -> View msg
 view app sharedModel =
     { title = "Publications"
     , nav = Nothing
-    , article = app.data |> Markdown.view |> Just
+    , article =
+        app.data
+            |> Markdown.view sharedModel
+            |> Just
     }

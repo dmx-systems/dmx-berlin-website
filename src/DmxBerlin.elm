@@ -1,4 +1,4 @@
-module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront)
+module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, isSmallScreen)
 
 import Project
 
@@ -8,7 +8,7 @@ import Route exposing (Route)
 import UrlPath exposing (UrlPath)
 import View exposing (View)
 
-import Html exposing (Attribute, Html, a, button, div, h1, li, nav, text)
+import Html exposing (Attribute, Html, a, button, div, nav, text)
 import Html.Attributes as Attributes exposing (class, href, id)
 import Html.Events exposing (onClick, stopPropagationOn)
 import Json.Decode as D

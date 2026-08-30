@@ -75,7 +75,7 @@ head app =
 view :
     App Data ActionData RouteParams -> Shared.Model -> Model
     -> View (PagesMsg Msg)
-view app shared model =
+view app sharedModel model =
     { title =
         case app.routeParams.slug of
             Just slug ->
@@ -87,24 +87,24 @@ view app shared model =
         Just (Project.viewNav app.routeParams)
     , article =
         app.data
-            |> Maybe.map Markdown.view
+            |> Maybe.map (Markdown.view sharedModel)
     }
 
 
 init : App Data ActionData RouteParams -> Shared.Model -> ( Model, Effect Msg )
-init app shared =
+init app sharedModel =
     ( {}, Effect.none )
 
 
 update :
     App Data ActionData RouteParams -> Shared.Model -> Msg -> Model
     -> ( Model, Effect Msg, Maybe Shared.Msg )
-update app shared msg model =
+update app sharedModel msg model =
     case msg of
         Project.Clicked slug ->
             ( model, Effect.none, Just <| DmxBerlin.ProjectSelected slug )
 
 
 subscriptions : RouteParams -> UrlPath -> Shared.Model -> Model -> Sub Msg
-subscriptions routeParams path shared model =
+subscriptions routeParams path sharedModel model =
     Sub.none

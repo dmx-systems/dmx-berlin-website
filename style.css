@@ -51,9 +51,9 @@ header button {
 header #site-menu nav {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1.3em;
   list-style-type: none;
-  padding: 1.5em 2em;
+  padding: 1.5em 1.8em;
   position: absolute;
   top: 0.3em;
   right: var(--padding-horiz);;
@@ -183,8 +183,8 @@ main#project em {
 
 /* Publications page */
 
-main#publications article > h1,
-main#publications article > p {
+main#publications:not(.small-screen) article > h1,
+main#publications:not(.small-screen) article > p {
   margin-left: calc(180px + 4rem);  /* cover image width + gap */
 }
 
