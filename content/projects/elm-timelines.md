@@ -7,7 +7,7 @@ Elm Timelines is a user interface for the creation of timelines, written in [Elm
 
 Despite Elm Timelines models and visualizes time it is not a calendar application. Instead Elm Timelines provides you a canvas for your mind e.g. for your personal memory process. By visualizing different aspects of your life at the same time e.g. living places, partners, projects, the screen may inspire you with new questions and jog your memory. However Elm Timelines does not force you into any topic and you can go to the future as well.
 
-### Try Elm Timelines
+### Try out
 
 You can use Elm Timelines right away by visiting the following link. No account required. Content you create is stored locally **in your browser** and stays there. When you close the browser window and revisit that link later on, your content will show up again.
 

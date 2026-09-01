@@ -34,6 +34,13 @@ The demo user account is a full Linqa administrator account. So you can create u
 
 You can self-host Linqa on your own server. Linqa requires Java 8 to be installed on the server. For the account/password related workflows Linqa relies on an infrastructure for sending email. For a complete Linqa installation guide see the [Linqa README](https://github.com/dmx-systems/dmx-linqa/).
 
-### Getting support
+### Support
 
 For discussing Linqa and for getting support please use the [DMX Forum](https://forum.dmx.berlin).
+
+For specific bug reports or feature requests please create an issue:  
+[https://github.com/dmx-systems/dmx-linqa/issues](https://github.com/dmx-systems/dmx-linqa/issues)
+
+### Source code
+
+[https://github.com/dmx-systems/dmx-linqa](https://github.com/dmx-systems/dmx-linqa)
