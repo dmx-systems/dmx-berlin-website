@@ -16,12 +16,12 @@ Topic content is stored and edited as **Markdown** (like e.g. in [Obsidian](http
 
 ### Try out
 
-No installation required, no account required. DM6 Elm is a local-first application. To use DM6 Elm visit this link:  
+No installation required, no account required. To use DM6 Elm visit this link:  
 [https://dmx-systems.github.io/dm6-elm-demo/](https://dmx-systems.github.io/dm6-elm-demo/)
 
 You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. Nest topics by dropping them on each other. Create associations by click-and-hold a topic, wait a short moment, then drag.
 
-Content you create is stored locally **in your browser**. When you close the browser window and revisit the above link later on, your content will show up again. To transfer content to another browser, use the import/export feature (see DM6 Elm's top/left menu).
+DM6 Elm is a local-first application. Content you create is stored locally **in your browser**. When you close the browser window and revisit the above link later on, your content will show up again. To transfer content to another browser, use the import/export feature (see DM6 Elm's top/left menu).
 
 ### Support
 

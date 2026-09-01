@@ -45,7 +45,7 @@ header a {
 
 header button {
   font-size: var(--font-size);
-  line-height: 1em;
+  line-height: 0;
 }
 
 header #site-menu nav {

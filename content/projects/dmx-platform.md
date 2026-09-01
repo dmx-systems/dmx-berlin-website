@@ -4,7 +4,7 @@ DMX Platform
 Platform for knowledge building, data modeling, and collaboration.  
 Full-stack web application framework.
 
-For 8 years (2018-2025) the DMX Platform was powering the DMX Systems UG (now defunct).
+For 8 years (2018-2025) the DMX Platform was powering the [DMX Systems UG](https://www.linkedin.com/company/dmx-systems/) (now defunct).
 Its [Linqa](/project/linqa) product is an application for the DMX platform.
 
 DMX Platform is the 5th version of the 25+ years running Open Source project "DeepaMehta".

@@ -12,7 +12,7 @@ A particular Linqa installation uses 2 languages out of a set of 9: German ðŸ‡©ð
 
 Linqa has 3 access levels: *Administrators* create whiteboards and assign users, *Editors* create content and arrange the whiteboard, and normal *Users* browse content and discuss.
 
-Linqa is a web application for the [DMX platform](/project/dmx), developed originally for [DMX Systems UG](https://www.linkedin.com/company/dmx-systems/). Like the DMX platform Linqa is Open Source software under the GNU AGPL license.
+Linqa is a web application for the [DMX platform](/project/dmx-platform), developed originally for [DMX Systems UG](https://www.linkedin.com/company/dmx-systems/). Like the DMX platform Linqa is Open Source software under the GNU AGPL license.
 
 Find more detailed information in the [Linqa README](https://github.com/dmx-systems/dmx-linqa#dmx-linqa).
 
