@@ -1,9 +1,12 @@
-module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, isSmallScreen)
+module DmxBerlin exposing (Model, Msg(..), Width, view, viewFront, metaTags, isSmallScreen)
 
 import Project
 
 import FeatherIcons as Icon
 
+import Head
+import Head.Seo as Seo
+import Pages.Url
 import Route exposing (Route)
 import UrlPath exposing (UrlPath)
 import View exposing (View)
@@ -81,6 +84,24 @@ view path model toMsg page =
         , viewFooter
         ]
     }
+
+
+metaTags : String -> String -> List Head.Tag
+metaTags title image =
+    Seo.summary
+        { title = title
+        , image =
+            { url = [ "previews", image ] |> Pages.Url.fromPath
+            , alt = "image alt TODO"
+            , dimensions = Nothing
+            , mimeType = Nothing
+            }
+        , description = "description TODO"
+        , siteName = "siteName TODO"
+        , locale = Nothing
+        , canonicalUrlOverride = Nothing
+        }
+        |> Seo.website
 
 
 -- Header

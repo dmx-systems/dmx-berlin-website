@@ -1,5 +1,6 @@
 module Route.About exposing (ActionData, Data, Model, Msg, route)
 
+import DmxBerlin
 import Markdown exposing (Markdown)
 
 import BackendTask exposing (BackendTask)
@@ -51,7 +52,7 @@ data =
 
 head : App Data ActionData RouteParams -> List Head.Tag
 head app =
-    []
+    DmxBerlin.metaTags "About" "about.png"
 
 
 view : App Data ActionData RouteParams -> Shared.Model -> View msg
