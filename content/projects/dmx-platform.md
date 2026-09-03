@@ -2,11 +2,11 @@ DMX Platform
 ============
 
 Platform for knowledge building, data modeling, and collaboration.  
-**Semantic desktop** with Bring-to-me navigation.  
+**Semantic desktop** featuring *Bring-to-me navigation* for preserving stable visual contexts.  
 Application server and full-stack web development framework.
 
 For 8 years (2018-2025) the DMX Platform was powering the [DMX Systems UG](https://www.linkedin.com/company/dmx-systems/) (now defunct).
-Its [Linqa](/project/linqa) product is an application for the DMX platform.
+Its [Linqa](/project/linqa) product is built on top of the DMX platform.
 
 DMX Platform is the 5th version of the 25+ years running Open Source project "DeepaMehta".
 Starting with version 5 "DeepaMehta" was renamed to "DMX".

@@ -74,7 +74,7 @@ view :
     UrlPath -> Model -> (Msg -> msg) -> View msg
     -> { title : String, body : List (Html msg) }
 view path model toMsg page =
-    { title = "dmx.berlin - " ++ page.title
+    { title = "dmx.berlin – " ++ page.title
     , body =
         [ viewHeader model toMsg
         , viewMain path page model
@@ -222,7 +222,7 @@ viewFooter =
 
 viewFront : View msg
 viewFront =
-    { title = "The screen, redesigned for focus"
+    { title = "A Cognitive Home"
     , nav = Nothing
     , article =
         Just
