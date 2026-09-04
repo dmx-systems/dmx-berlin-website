@@ -165,7 +165,7 @@ main#project nav .selected a {
   color: var(--selection-color);
 }
 
-main#project nav .tagline {
+main#project nav .description {
   font-size: var(--font-size-small);
   color: gray;
 }

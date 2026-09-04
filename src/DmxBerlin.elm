@@ -86,17 +86,17 @@ view path model toMsg page =
     }
 
 
-metaTags : String -> String -> List Head.Tag
-metaTags title image =
+metaTags : String -> String -> String -> List Head.Tag
+metaTags title description imagePath =
     Seo.summary
         { title = title
+        , description = description
         , image =
-            { url = [ "previews", image ] |> Pages.Url.fromPath
+            { url = imagePath |> UrlPath.fromString |> Pages.Url.fromPath
             , alt = "image alt TODO"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "description TODO"
         , siteName = "siteName TODO"
         , locale = Nothing
         , canonicalUrlOverride = Nothing

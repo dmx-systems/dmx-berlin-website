@@ -50,7 +50,10 @@ data =
 
 head : App Data ActionData RouteParams -> List Head.Tag
 head app =
-    DmxBerlin.metaTags "Publications" "publications.png"
+    DmxBerlin.metaTags
+        "Publications"
+        "Academic articles about the DeepaMehta semantic desktop"
+        "/previews/publications.png"
 
 
 view : App Data ActionData RouteParams -> Shared.Model -> View msg

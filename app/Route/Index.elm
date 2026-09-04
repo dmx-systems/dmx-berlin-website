@@ -47,7 +47,10 @@ data =
 
 head : App Data ActionData RouteParams -> List Head.Tag
 head app =
-    DmxBerlin.metaTags "A Cognitive Home" "index.png"
+    DmxBerlin.metaTags
+        "A Cognitive Home"
+        "The screen, redesigned for focus"
+        "/previews/index.png"
 
 
 view : App Data ActionData RouteParams -> Shared.Model -> View msg

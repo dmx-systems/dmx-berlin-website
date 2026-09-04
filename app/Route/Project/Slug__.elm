@@ -69,7 +69,18 @@ data routeParams =
 
 head : App Data ActionData RouteParams -> List Head.Tag
 head app =
-    []
+    let
+        (title, description, imagePath) =
+            Project.info
+                app.routeParams
+                (\project -> (project.title, project.description, project.imagePath))
+                ( "Projects"
+                , "Software developed by Jörg Richter"
+                , "/previews/projects.png"
+                )
+                ("?", "?", "?")
+    in
+    DmxBerlin.metaTags title description imagePath
 
 
 view :
@@ -77,12 +88,7 @@ view :
     -> View (PagesMsg Msg)
 view app sharedModel model =
     { title =
-        case app.routeParams.slug of
-            Just slug ->
-                Project.lookup slug
-                    |> Maybe.map .name
-                    |> Maybe.withDefault "?" -- error (lookup failed)
-            Nothing -> "Projects"
+        Project.info app.routeParams .title "Projects" "?"
     , nav =
         Just (Project.viewNav app.routeParams)
     , article =

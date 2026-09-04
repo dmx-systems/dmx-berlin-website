@@ -52,7 +52,10 @@ data =
 
 head : App Data ActionData RouteParams -> List Head.Tag
 head app =
-    DmxBerlin.metaTags "About" "about.png"
+    DmxBerlin.metaTags
+        "About"
+        "Personal website of Jörg Richter, software developer from Berlin"
+        "/previews/about.png"
 
 
 view : App Data ActionData RouteParams -> Shared.Model -> View msg
