@@ -21,7 +21,7 @@ No installation required, no account required. To use DM6 Elm visit this link:
 
 You'll see a mostly empty page. Start creating topics by the plus-button in the bottom/left corner. Nest topics by dropping them on each other. Create associations by click-and-hold a topic, wait a short moment, then drag.
 
-DM6 Elm is a local-first application. Content you create is stored locally **in your browser**. When you close the browser window and revisit the above link later on, your content will show up again. To transfer content to another browser, use the import/export feature (see DM6 Elm's top/left menu).
+DM6 Elm is a local-first application. Content you create is stored locally **in your browser**. When you close the browser window and revisit the above link later on, your content will show up again. To transfer content to another browser, use the import/export feature (see DM6 Elm's top/right menu).
 
 ### Support
 
