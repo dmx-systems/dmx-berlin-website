@@ -97,7 +97,7 @@ metaTags title description imagePath =
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , siteName = "siteName TODO"
+        , siteName = "dmx.berlin"
         , locale = Nothing
         , canonicalUrlOverride = Nothing
         }
