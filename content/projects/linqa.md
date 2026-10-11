@@ -16,7 +16,9 @@ Linqa is a web application for the [DMX platform](/project/dmx-platform), develo
 
 Find more detailed information in the [Linqa README](https://github.com/dmx-systems/dmx-linqa#dmx-linqa).
 
-### Promotional content
+
+Promotional content
+-------------------
 
 Visit the [Linqa website](https://linqa.eu) and blog.
 
@@ -24,23 +26,31 @@ Visit the [Linqa website](https://linqa.eu) and blog.
 
 View the <new-window src="/linqa/linqa-brochure.pdf" text="Linqa brochure (PDF)"></new-window> (opens in a separate window).
 
-### Try out
+
+Try out
+-------
 
 Go to the [Linqa website](https://linqa.eu) and request access to the [Linqa demo installation](https://demo.linqa.eu). You'll receive login information by email then. Once logged in use the top/right menu for help.
 
 The demo user account is a full Linqa administrator account. So you can create user accounts to test Linqa's collaboration features as well. Note that account creation is based on real email addresses. For a description of the administrative features please see [Create users and workspaces](https://github.com/dmx-systems/dmx-linqa#create-users-and-workspaces) in the Linqa README.
 
-### Self-hosting
+
+Self-hosting
+------------
 
 You can self-host Linqa on your own server. Linqa requires Java 8 to be installed on the server. For the account/password related workflows Linqa relies on an infrastructure for sending email. For a complete Linqa installation guide see the [Linqa README](https://github.com/dmx-systems/dmx-linqa/).
 
-### Support
+
+Support
+-------
 
 For discussing Linqa and for getting support please use the [DMX Forum](https://forum.dmx.berlin).
 
 For specific bug reports or feature requests please create an issue:  
 [https://github.com/dmx-systems/dmx-linqa/issues](https://github.com/dmx-systems/dmx-linqa/issues)
 
-### Source code
+
+Source code
+-----------
 
 [https://github.com/dmx-systems/dmx-linqa](https://github.com/dmx-systems/dmx-linqa)

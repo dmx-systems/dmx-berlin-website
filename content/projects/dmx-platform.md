@@ -16,12 +16,16 @@ Its successor project is [DM6 Elm](/project/dm6-elm).
 
 ![DMX Webclient screenshot](/dmx-platform/dmx-webclient.png)
 
-### Download
+
+Download
+--------
 
 DMX Platform + plugins:  
 [https://download.dmx.berlin](https://download.dmx.berlin)
 
-### Documentation
+
+Documentation
+-------------
 
 DMX documentation is available online at Read the Docs. There is a user guide, a developer guide, and an administrator guide.
 Also some DMX plugins are covered, like `dmx-geomaps`, `dmx-tableview`, `dmx-file-upload`, `dmx-sendmail`, and `dmx-ldap`.
@@ -32,17 +36,23 @@ An alternative DMX user guide is available as PDF. It is written by community me
 
  <new-window src="/dmx-platform/dmx-userguide-liangbing.pdf" text="dmx-userguide-liangbing.pdf"></new-window> (opens in a separate window)
 
-### Support
+
+Support
+-------
 
 For getting support and for general discussion please use the [DMX Forum](https://forum.dmx.berlin).
 
 For specific bug reports or feature requests please create an issue:  
 [https://github.com/dmx-systems/dmx-platform/issues](https://github.com/dmx-systems/dmx-platform/issues)
 
-### Source code
+
+Source code
+-----------
 
 [https://github.com/dmx-systems/dmx-platform](https://github.com/dmx-systems/dmx-platform)
 
-### Legacy website (DeepaMehta 4)
+
+Legacy website (DeepaMehta 4)
+-----------------------------
 
 [https://deepamehta.de](https://deepamehta.de)
