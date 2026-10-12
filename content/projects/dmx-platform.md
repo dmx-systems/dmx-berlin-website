@@ -1,9 +1,9 @@
 DMX Platform
 ============
 
-Platform for knowledge building, data modeling, and collaboration.  
-**Semantic desktop** featuring *Bring-to-me navigation* for preserving stable visual contexts.  
-Application server and full-stack web development framework.
+➜ Platform for knowledge building, data modeling, and collaboration.  
+➜ **Semantic desktop** featuring *Bring-to-me navigation* for preserving stable visual contexts.  
+➜ Application server and full-stack web development framework.
 
 For 8 years (2017-2025) the DMX Platform was powering the [DMX Systems UG](https://www.linkedin.com/company/dmx-systems/) (now defunct).
 Its [Linqa](/project/linqa) product is built on top of the DMX platform.

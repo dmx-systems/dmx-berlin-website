@@ -1,7 +1,7 @@
 Linqa
 =====
 
-Breaking language barriers
+➜ Breaking language barriers
 
 Linqa is a multilingual whiteboard for supporting international collaboration.  Users place content items (notes, text blocks, PDF, images, audio, video, documents) on a shared whiteboard and discuss them in a chat-like manner.
 All content and discussion is translated automatically. Translations can be revised manually.
